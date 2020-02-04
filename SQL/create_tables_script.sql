@@ -1,7 +1,7 @@
 CREATE TABLE if not exists node (
 	id integer primary key,
 	name text,
-	graph_id integer
+	graph_id integer,
 	FOREIGN KEY(graph_id) REFERENCES graph(id));
 
 
@@ -11,7 +11,7 @@ CREATE TABLE if not exists edge (
 	length integer, 
 	node_start_id integer, 
 	node_end_id integer
-	graph_id integer
+	graph_id integer,
 	FOREIGN KEY(graph_id) REFERENCES graph(id),
 	FOREIGN KEY(node_start_id) REFERENCES node(id),
 	FOREIGN KEY(node_end_id) REFERENCES node(id));
