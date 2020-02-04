@@ -7,10 +7,10 @@ CREATE TABLE if not exists node (
 
 CREATE TABLE if not exists edge (
        id integer primary key, 
-	name text
+	name text,
 	cost integer, 
 	node_start_id integer, 
-	node_end_id integer
+	node_end_id integer,
 	graph_id integer,
 	FOREIGN KEY(graph_id) REFERENCES graph(id),
 	FOREIGN KEY(node_start_id) REFERENCES node(id),
