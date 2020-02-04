@@ -8,7 +8,7 @@ CREATE TABLE if not exists node (
 CREATE TABLE if not exists edge (
        id integer primary key, 
 	name text
-	length integer, 
+	cost integer, 
 	node_start_id integer, 
 	node_end_id integer
 	graph_id integer,
