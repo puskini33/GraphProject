@@ -6,30 +6,63 @@ from database_api.close_database import commit_and_close_database
 
 class TestGraphRepository(unittest.TestCase):
 
-    def test_get_graph(self, graph_repository, c):
+    def test_graph_CRUD_operations(self):
+        local_graph_repository = GraphRepository()
+        conn = db_connect('E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db')
+        cursor = create_cursor(conn)
 
-        c.execute(graph_repository.get_graph(1))
-        fetched_inserted_values = c.fetchall()
-
-        self.assertEqual(fetched_inserted_values, [(1, 'Test_Graph1')])
-
-        c.execute(graph_repository.get_graph(5))
-        fetched_inserted_values = c.fetchall()
-        self.assertEqual(fetched_inserted_values, [(5, 'Elena_Graph')])
-
-    def test_insert(self, graph_repository, c):
-        c.execute(graph_repository.insert('First_Graph'))
-        fetched_inserted_values = c.fetchall()
-
+        # insert 'First_Graph'
+        cursor.execute(local_graph_repository.insert(10, 'Ionut_Graph'))
+        fetched_inserted_values = cursor.fetchall()
         self.assertEqual(fetched_inserted_values, [])
 
-    def test_get_graph_nodes(self):
-        pass
+        # get graph values
+        cursor.execute(local_graph_repository.get_graph(1))
+        fetched_selected_values_1 = cursor.fetchall()
+        self.assertEqual(fetched_selected_values_1, [(1, 'Test_Graph1')])
+
+        # insert 'Elena_Graph'
+        cursor.execute(local_graph_repository.insert(12, 'Elena_Graph'))
+        fetched_inserted_values_1 = cursor.fetchall()
+        self.assertEqual(fetched_inserted_values_1, [])
+
+        # update graph values
+        cursor.execute(local_graph_repository.update_graph(12, 'Elena_Graph'))
+        fetched_update_values_2 = cursor.fetchall()
+        self.assertEqual(fetched_update_values_2, [])
+
+        # get graph values
+        cursor.execute(local_graph_repository.get_graph(12))
+        fetched_selected_values_2 = cursor.fetchall()
+        self.assertEqual(fetched_selected_values_2, [(12, 'Elena_Graph')])
+
+        # get graph nodes
+        cursor.execute(local_graph_repository.get_graph_nodes(1))
+        fetched_selected_values_3 = cursor.fetchall()
+        self.assertEqual(fetched_selected_values_3, [(1, 1, 'a'), (1, 2, 'b'), (1, 3, 'c'), (1, 4, 'd'), (1, 5, 'e')])
+
+        # update graph values
+        cursor.execute(local_graph_repository.update_graph(12, 'Test_Graph9'))
+        fetched_update_values_2 = cursor.fetchall()
+        self.assertEqual(fetched_update_values_2, [])
+
+        # get graph values
+        cursor.execute(local_graph_repository.get_graph(12))
+        fetched_selected_values_3 = cursor.fetchall()
+        self.assertEqual(fetched_selected_values_3, [(12, 'Test_Graph9')])
+
+        # delete values
+        cursor.execute(local_graph_repository.delete_graph(5))
+        fetched_deleted_values = cursor.fetchall()
+        self.assertEqual(fetched_deleted_values, [])
+
+        # get graph values
+        cursor.execute(local_graph_repository.get_graph(5))
+        fetched_selected_values_4 = cursor.fetchall()
+        self.assertIsNot(fetched_selected_values_4, [(5, 'Test_Graph9')])
+
+        commit_and_close_database(conn)
 
 
-if __name__ == '__main__':
-    local_graph_repository = GraphRepository()
-    conn = db_connect('E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db')
-    cursor = create_cursor(conn)
-    test_graph = TestGraphRepository()
-    test_graph.test_insert(local_graph_repository, cursor)
+
+
