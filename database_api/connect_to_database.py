@@ -1,15 +1,18 @@
-import os
 import sqlite3
 
 
-DEFAULT_PATH = os.path.join(os.path.dirname(__file__), 'graph.db')
+class ConnectToDatabase(object):
 
+    @staticmethod
+    def db_connect(db_path):
+        connection = sqlite3.connect(db_path)
+        cursor = connection.cursor()
+        return connection, cursor
 
-def db_connect(db_path=DEFAULT_PATH):
-    connection = sqlite3.connect(db_path)
-    return connection
+    @staticmethod
+    def db_commit(connection):
+        connection.commit()
 
-
-def create_cursor(connection):
-    cursor = connection.cursor()
-    return cursor
+    @staticmethod
+    def db_close(connection):
+        connection.close()
