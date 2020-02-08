@@ -8,16 +8,18 @@ class GraphRepository(BaseRepository):
         self.path = path
         super().__init__()
 
-    @staticmethod
-    def insert(graph_id, graph_name):
+    def insert(self, graph_id, graph_name):
         inserted_values = f"INSERT OR IGNORE INTO graph (id, name) " \
                           f"VALUES ('{graph_id}', '{graph_name}')"
-        # +IGNORE Syntax: That there is no error if the same values are to be inserted
-        # or if a value is inserted where already another value exists
-        return inserted_values
 
-    @staticmethod
-    def get_graph(graph_id):
+        return
+
+    # Question: Why does it not work when i try to call the execute_commit_fetch method in the insert method?
+
+    def close_database(self):
+        return self.connection.close()
+
+    def get_graph(self, graph_id):
         certain_graph = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
         return certain_graph
 
@@ -39,3 +41,8 @@ class GraphRepository(BaseRepository):
     def delete_graph(graph_id):
         deleted_values = f"DELETE FROM graph WHERE id = '{graph_id}';"
         return deleted_values
+
+    def execute_commit_fetch(self, syntax):
+        self.cursor.execute(syntax)
+        self.connection.commit()
+        return self.cursor.fetchall()

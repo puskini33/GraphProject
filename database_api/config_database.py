@@ -5,5 +5,5 @@ class ConfigDatabase(object):
 
     @staticmethod
     def get_path(path='E:\\PYTHON\\code\\GraphProject\\SQL'):
-        default_path = os.path.join(os.path.dirname(__file__), 'graph.db')
+        default_path = os.path.join(path, 'graph.db')
         return default_path

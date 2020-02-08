@@ -64,5 +64,21 @@ class TestGraphRepository(unittest.TestCase):
         commit_and_close_database(conn)
 
 
+class TestGraphRepository(unittest.TestCase):
 
+    def test_graph_repository_insert(self):
+     # prepare
+     graph_repository = GraphRepository()
+     connection = sqlite3.connect('E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db')
+     cursor = connection.cursor()
+     graph_name = 'Ionut_Graph'
+
+    # act
+    graph_id = graph_repository.insert(graph_name)
+
+    #assert
+    sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
+    existing_graph = cursor.execute(sql_select)
+    self.assertEqual(existing_graph[0], graph_id)
+    self.assertEqual(existing_graph[1], graph_name)
 

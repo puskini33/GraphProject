@@ -3,16 +3,14 @@ from database_api.base_repository import BaseRepository
 
 local_graph = GraphRepository()
 # connect to database and create cursor
-connection, cursor = local_graph.open_database()
+connection = local_graph.connection
 
 # execute queries
-cursor.execute(local_graph.get_graph(1))
-print(cursor.fetchall())
-cursor.execute(local_graph.get_graph(5))
-print(cursor.fetchall())
+print(local_graph.insert(13, 'Flora Graph'))
 
-# commit and close database
-local_graph.commit_to_database()
+
+# close database
+local_graph.close_database()
 
 
 
