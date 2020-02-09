@@ -8,6 +8,14 @@ class NodeRepository(object):
         node_values = f"SELECT * FROM node WHERE node.id = '{node_id}';"
         return node_values
 
+    def get_graph_nodes(self, graph_id):
+        graph_nodes = f"SELECT graph.id AS graph_id, node.id AS node_id, node.name AS node_name "\
+                      f"FROM node "\
+                      f"JOIN graph "\
+                      f"ON node.graph_id = graph.id "\
+                      f"WHERE graph.id = '{graph_id}';"
+        return graph_nodes
+
     def get_node_edges(self, node_id):
         node_edges_values = f"SELECT node.name AS node_name, " \
                             f"edge.name AS edge_name " \

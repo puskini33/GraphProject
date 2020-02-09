@@ -1,20 +1,50 @@
 import unittest
 from database_api.graph_repository import GraphRepository
-from database_api.connect_to_database import db_connect, create_cursor
-from database_api.close_database import commit_and_close_database
+from database_api.base_repository import BaseRepository
 
 
 class TestGraphRepository(unittest.TestCase):
 
-    def test_graph_CRUD_operations(self):
-        local_graph_repository = GraphRepository()
-        conn = db_connect('E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db')
-        cursor = create_cursor(conn)
+    def test_insert_graph_repository(self):
 
-        # insert 'First_Graph'
-        cursor.execute(local_graph_repository.insert(10, 'Ionut_Graph'))
+        # prepare
+        insert_to_graph_repository = GraphRepository()
+        cursor = insert_to_graph_repository.cursor
+
+        # act
+        graph_name = 'XcV4 Graph'
+        insert_to_graph_repository.insert(graph_name)
+
+        sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.name = '{graph_name}';"
+        cursor.execute(sql_select)
+        values_existing_graph = cursor.fetchall()
+
+        # assert
+        self.assertEqual(values_existing_graph[0][1], graph_name)
+        insert_to_graph_repository.close_database()
+
+    def test_get_graph(self):
+
+        # prepare
+        get_graph_repository = GraphRepository()
+        cursor = get_graph_repository.cursor
+
+        # act
+        graph_id = 2
+        graph_name = get_graph_repository.get_graph(graph_id)
+
+        sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
+        cursor.execute(sql_select)
+        values_existing_graph = cursor.fetchall()
+
+        # assert
+        self.assertEqual(values_existing_graph, graph_name)
+        get_graph_repository.close_database()
+
+        """# insert 'First_Graph'
+        cursor.execute()
         fetched_inserted_values = cursor.fetchall()
-        self.assertEqual(fetched_inserted_values, [])
+
 
         # get graph values
         cursor.execute(local_graph_repository.get_graph(1))
@@ -80,5 +110,5 @@ class TestGraphRepository(unittest.TestCase):
     sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
     existing_graph = cursor.execute(sql_select)
     self.assertEqual(existing_graph[0], graph_id)
-    self.assertEqual(existing_graph[1], graph_name)
+    self.assertEqual(existing_graph[1], graph_name)"""
 
