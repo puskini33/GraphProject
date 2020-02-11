@@ -1,15 +1,17 @@
-import unittest
 from database_api.graph_repository import GraphRepository
-from database_api.base_repository import BaseRepository
+import unittest
+import sqlite3
 
 
+# TODO: Figure it out why only one test is run instead of all 4 when I run from Pycharm in comparison to command line.
 class TestGraphRepository(unittest.TestCase):
 
-    def test_insert_graph_repository(self):
+    def test_insert_graph(self):
 
         # prepare
         insert_to_graph_repository = GraphRepository()
-        cursor = insert_to_graph_repository.cursor
+        database_connection = sqlite3.connect(insert_to_graph_repository.path)
+        cursor = database_connection.cursor()
 
         # act
         graph_name = 'XcV4 Graph'
@@ -21,13 +23,15 @@ class TestGraphRepository(unittest.TestCase):
 
         # assert
         self.assertEqual(values_existing_graph[0][1], graph_name)
-        insert_to_graph_repository.close_database()
+        database_connection.commit()
+        database_connection.close()
 
     def test_get_graph(self):
 
         # prepare
         get_graph_repository = GraphRepository()
-        cursor = get_graph_repository.cursor
+        database_connection = sqlite3.connect(get_graph_repository.path)
+        cursor = database_connection.cursor()
 
         # act
         graph_id = 2
@@ -39,76 +43,78 @@ class TestGraphRepository(unittest.TestCase):
 
         # assert
         self.assertEqual(values_existing_graph, graph_name)
-        get_graph_repository.close_database()
+        database_connection.commit()
+        database_connection.close()
 
-        """# insert 'First_Graph'
-        cursor.execute()
-        fetched_inserted_values = cursor.fetchall()
+    def test_update_graph(self):
 
+        # prepare
+        update_graph_repository = GraphRepository()
+        database_connection = sqlite3.connect(update_graph_repository.path)
+        cursor = database_connection.cursor()
 
-        # get graph values
-        cursor.execute(local_graph_repository.get_graph(1))
-        fetched_selected_values_1 = cursor.fetchall()
-        self.assertEqual(fetched_selected_values_1, [(1, 'Test_Graph1')])
+        # act
 
-        # insert 'Elena_Graph'
-        cursor.execute(local_graph_repository.insert(12, 'Elena_Graph'))
-        fetched_inserted_values_1 = cursor.fetchall()
-        self.assertEqual(fetched_inserted_values_1, [])
+        # insert new graph
+        graph_name = 'Nar Graph'
+        insert_sql_syntax = f"INSERT OR IGNORE INTO graph (name) " \
+                            f"VALUES ('{graph_name}')"
 
-        # update graph values
-        cursor.execute(local_graph_repository.update_graph(12, 'Elena_Graph'))
-        fetched_update_values_2 = cursor.fetchall()
-        self.assertEqual(fetched_update_values_2, [])
+        cursor.execute(insert_sql_syntax)
+        database_connection.commit()
 
-        # get graph values
-        cursor.execute(local_graph_repository.get_graph(12))
-        fetched_selected_values_2 = cursor.fetchall()
-        self.assertEqual(fetched_selected_values_2, [(12, 'Elena_Graph')])
+        # get the id of new graph
+        sql_select = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
+        cursor.execute(sql_select)
+        database_connection.commit()
+        list_graph_id = cursor.fetchone()
+        last_graph_id = list_graph_id[0]
 
-        # get graph nodes
-        cursor.execute(local_graph_repository.get_graph_nodes(1))
-        fetched_selected_values_3 = cursor.fetchall()
-        self.assertEqual(fetched_selected_values_3, [(1, 1, 'a'), (1, 2, 'b'), (1, 3, 'c'), (1, 4, 'd'), (1, 5, 'e')])
+        # update graph
+        graph_updated_name = 'Updated Name Graph'
+        update_graph_repository.update_graph(last_graph_id, graph_updated_name)
+        database_connection.commit()
 
-        # update graph values
-        cursor.execute(local_graph_repository.update_graph(12, 'Test_Graph9'))
-        fetched_update_values_2 = cursor.fetchall()
-        self.assertEqual(fetched_update_values_2, [])
+        # select updated graph
+        sql_select = f"SELECT graph.name FROM graph WHERE graph.id = '{last_graph_id}';"
+        cursor.execute(sql_select)
+        database_connection.commit()
+        values_existing_graph = cursor.fetchall()
 
-        # get graph values
-        cursor.execute(local_graph_repository.get_graph(12))
-        fetched_selected_values_3 = cursor.fetchall()
-        self.assertEqual(fetched_selected_values_3, [(12, 'Test_Graph9')])
+        # assert
+        self.assertEqual(values_existing_graph, [(graph_updated_name,)])
+        database_connection.close()
 
-        # delete values
-        cursor.execute(local_graph_repository.delete_graph(5))
-        fetched_deleted_values = cursor.fetchall()
-        self.assertEqual(fetched_deleted_values, [])
+    def test_delete_graph(self):
+        # prepare
+        delete_graph_repository = GraphRepository()
+        database_connection = sqlite3.connect(delete_graph_repository.path)
+        cursor = database_connection.cursor()
 
-        # get graph values
-        cursor.execute(local_graph_repository.get_graph(5))
-        fetched_selected_values_4 = cursor.fetchall()
-        self.assertIsNot(fetched_selected_values_4, [(5, 'Test_Graph9')])
+        # act
 
-        commit_and_close_database(conn)
+        # insert new_graph
+        graph_name = 'To be deleted Graph'
+        insert_sql_syntax = f"INSERT OR IGNORE INTO graph (name) " \
+                            f"VALUES ('{graph_name}')"
+        cursor.execute(insert_sql_syntax)
+        database_connection.commit()
 
+        # get id of new graph
+        sql_select = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
+        cursor.execute(sql_select)
+        database_connection.commit()
+        new_graph_id = cursor.fetchone()[0]
 
-class TestGraphRepository(unittest.TestCase):
+        # delete new_graph
+        delete_graph_repository.delete_graph(new_graph_id)
 
-    def test_graph_repository_insert(self):
-     # prepare
-     graph_repository = GraphRepository()
-     connection = sqlite3.connect('E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db')
-     cursor = connection.cursor()
-     graph_name = 'Ionut_Graph'
+        # select new_graph
+        sql_query = f"SELECT * FROM graph WHERE graph.id = '{new_graph_id}';"
+        cursor.execute(sql_query)
+        database_connection.commit()
+        values_existing_graph = cursor.fetchall()
 
-    # act
-    graph_id = graph_repository.insert(graph_name)
-
-    #assert
-    sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
-    existing_graph = cursor.execute(sql_select)
-    self.assertEqual(existing_graph[0], graph_id)
-    self.assertEqual(existing_graph[1], graph_name)"""
-
+        # assert
+        self.assertEqual(values_existing_graph, [])
+        database_connection.close()
