@@ -5,14 +5,20 @@ import sqlite3
 
 class TestGraphRepository(unittest.TestCase):
 
-    def test_insert_graph(self):
-        # prepare
+    @staticmethod
+    def set_database_connection():
         path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
         graph_repository = GraphRepository(path)
         test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        with test_database_connection:
+            test_cursor = test_database_connection.cursor()
+            test_cursor.execute("DELETE FROM graph;")
+            test_database_connection.commit()
+        return test_database_connection, test_cursor, graph_repository
+
+    def test_insert_graph(self):
+        # prepare
+        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
         graph_name = 'XcV4'
@@ -22,7 +28,6 @@ class TestGraphRepository(unittest.TestCase):
         test_cursor.execute(f"SELECT graph.name FROM graph WHERE name = '{graph_name}'")
         test_database_connection.commit()
         name_existing_graph = test_cursor.fetchall()[0][0]
-        test_database_connection.close()
 
         # assert
         self.assertEqual(name_existing_graph, graph_name)
@@ -30,12 +35,7 @@ class TestGraphRepository(unittest.TestCase):
     def test_get_graph(self):
 
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        graph_repository = GraphRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
         graph_name = 'gaga'
@@ -60,7 +60,6 @@ class TestGraphRepository(unittest.TestCase):
         test_cursor.execute(sql_select)
         test_database_connection.commit()
         graph_values = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(graph_values, graph_values_from_graph_repository)
@@ -68,12 +67,7 @@ class TestGraphRepository(unittest.TestCase):
     def test_update_graph(self):
 
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        graph_repository = GraphRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -99,19 +93,13 @@ class TestGraphRepository(unittest.TestCase):
         test_cursor.execute(sql_select)
         test_database_connection.commit()
         graph_name = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(graph_name, [(graph_updated_name,)])
 
     def test_delete_graph(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        graph_repository = GraphRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
         # insert new_graph
@@ -136,7 +124,6 @@ class TestGraphRepository(unittest.TestCase):
         test_cursor.execute(sql_query)
         test_database_connection.commit()
         graph_values = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(graph_values, [])

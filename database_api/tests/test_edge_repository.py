@@ -6,6 +6,21 @@ import sqlite3
 class TestEdgeRepository(unittest.TestCase):
 
     @staticmethod
+    def set_database_connection():
+        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
+        edge_repository = EdgeRepository(path)
+        test_database_connection = sqlite3.connect(path)
+        with test_database_connection:
+            test_cursor = test_database_connection.cursor()
+            test_cursor.execute("DELETE FROM edge;")
+            test_database_connection.commit()
+            test_cursor.execute("DELETE FROM node;")
+            test_database_connection.commit()
+            test_cursor.execute("DELETE FROM graph;")
+            test_database_connection.commit()
+        return test_database_connection, test_cursor, edge_repository
+
+    @staticmethod
     def insert_graph(test_database_connection, test_cursor, graph_name):
         sql_insert_graph = f"INSERT OR IGNORE INTO graph (name) " \
             f"VALUES ('{graph_name}');"
@@ -34,12 +49,7 @@ class TestEdgeRepository(unittest.TestCase):
 
     def test_insert_edge(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        edge_repository = EdgeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM edge;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -72,19 +82,13 @@ class TestEdgeRepository(unittest.TestCase):
         test_cursor.execute(sql_select_edge)
         test_database_connection.commit()
         edge_values = test_cursor.fetchall()[0]
-        test_database_connection.close()
 
         # assert
         self.assertEqual(edge_values, (edge_name, edge_cost))
 
     def test_get_edge(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        edge_repository = EdgeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM edge;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -119,7 +123,6 @@ class TestEdgeRepository(unittest.TestCase):
         test_cursor.execute(sql_get_edge_id)
         test_database_connection.commit()
         edge_id = test_cursor.fetchall()[0][0]
-        test_database_connection.close()
 
         # get values of edge via edge_repository
         edge_values = edge_repository.get_edge(edge_id)[0]
@@ -130,12 +133,7 @@ class TestEdgeRepository(unittest.TestCase):
 
     def test_get_edge_nodes(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        edge_repository = EdgeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM edge;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -173,16 +171,7 @@ class TestEdgeRepository(unittest.TestCase):
 
     def test_update_edge(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        edge_repository = EdgeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM edge;")
-        test_database_connection.commit()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -229,23 +218,13 @@ class TestEdgeRepository(unittest.TestCase):
         test_cursor.execute(sql_get_edge_updated_cost)
         test_database_connection.commit()
         updated_edge_cost = test_cursor.fetchall()[0][0]
-        test_database_connection.close()
 
         # assert
         self.assertEqual(updated_edge_cost, new_edge_cost)
 
     def test_delete_edge(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        edge_repository = EdgeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM edge;")
-        test_database_connection.commit()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
-        test_cursor.execute("DELETE FROM graph;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
         # insert new graph
@@ -291,11 +270,6 @@ class TestEdgeRepository(unittest.TestCase):
         test_cursor.execute(sql_statement_edge_id)
         test_database_connection.commit()
         deleted_edge_id = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(deleted_edge_id, [])
-
-
-
-

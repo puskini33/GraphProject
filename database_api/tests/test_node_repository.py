@@ -5,14 +5,22 @@ import sqlite3
 
 class TestNodeRepository(unittest.TestCase):
 
-    def test_insert_node(self):
-        # prepare
+    @staticmethod
+    def set_database_connection():
         path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
         node_repository = NodeRepository(path)
         test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
+        with test_database_connection:
+            test_cursor = test_database_connection.cursor()
+            test_cursor.execute("DELETE FROM node;")
+            test_database_connection.commit()
+            test_cursor.execute("DELETE FROM graph;")
+            test_database_connection.commit()
+        return test_database_connection, test_cursor, node_repository
+
+    def test_insert_node(self):
+        # prepare
+        test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
         node_name = 'A'
@@ -27,19 +35,13 @@ class TestNodeRepository(unittest.TestCase):
         test_cursor.execute(sql_select)
         test_database_connection.commit()
         selected_node_name = test_cursor.fetchall()[0][0]
-        test_database_connection.close()
 
         # assert
         self.assertEqual(selected_node_name, node_name)
 
     def test_get_node(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        node_repository = NodeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
         node_name = 'T'
@@ -71,19 +73,13 @@ class TestNodeRepository(unittest.TestCase):
         test_cursor.execute(sql_syntax)
         test_database_connection.commit()
         node_values = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(node_values, node_values_from_repository)
 
     def test_get_graph_nodes(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        node_repository = NodeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
         node_name = 'R'
@@ -113,19 +109,13 @@ class TestNodeRepository(unittest.TestCase):
         test_cursor.execute(sql_syntax)
         test_database_connection.commit()
         node_values = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(node_values, node_values_from_node_repository)
 
     def test_update_node(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        node_repository = NodeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
         node_name = 'R'
@@ -158,19 +148,13 @@ class TestNodeRepository(unittest.TestCase):
         test_cursor.execute(sql_syntax)
         test_database_connection.commit()
         updated_node_values = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(updated_node_values, [(node_id, updated_node_name, graph_id)])
 
     def test_delete_node(self):
         # prepare
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        node_repository = NodeRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        test_cursor = test_database_connection.cursor()
-        test_cursor.execute("DELETE FROM node;")
-        test_database_connection.commit()
+        test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
         # insert new_node
@@ -195,7 +179,6 @@ class TestNodeRepository(unittest.TestCase):
         test_cursor.execute(sql_verify_syntax)
         test_database_connection.commit()
         deleted_node_id = test_cursor.fetchall()
-        test_database_connection.close()
 
         # assert
         self.assertEqual(deleted_node_id, [])
