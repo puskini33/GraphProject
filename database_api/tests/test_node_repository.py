@@ -20,6 +20,7 @@ class TestNodeRepository(unittest.TestCase):
 
         # insert node via node repository
         node_repository.insert_node(node_name, graph_id)
+        node_repository.close_connection()
 
         # select name inserted node
         sql_select = f"SELECT node.name FROM node WHERE node.name = '{node_name}';"
@@ -63,6 +64,7 @@ class TestNodeRepository(unittest.TestCase):
 
         # get values of inserted node from node_repository
         node_values_from_repository = node_repository.get_node(inserted_node_id)
+        node_repository.close_connection()
 
         # manually get values of inserted node
         sql_syntax = f"SELECT * FROM node WHERE node.id = '{inserted_node_id}';"
@@ -100,6 +102,7 @@ class TestNodeRepository(unittest.TestCase):
 
         # get nodes of graph from node repository
         node_values_from_node_repository = node_repository.get_graph_nodes(graph_id)
+        node_repository.close_connection()
 
         # manually get nodes of graph
         sql_syntax = f"SELECT graph.id, node.id , node.name "\
@@ -148,6 +151,7 @@ class TestNodeRepository(unittest.TestCase):
         # update name of new_node
         updated_node_name = 'E'
         node_repository.update_node(node_id, updated_node_name, graph_id)
+        node_repository.close_connection()
 
         # get updated values of new_node
         sql_syntax = f"SELECT * FROM node WHERE node.id = '{node_id}';"
@@ -184,7 +188,8 @@ class TestNodeRepository(unittest.TestCase):
 
         # delete new_node
         node_repository.delete_node(node_id)
-
+        node_repository.close_connection()
+        
         # verify if id exists
         sql_verify_syntax = f"SELECT node.id FROM node WHERE node.name = '{node_name}' AND node.graph_id = '{graph_id}'"
         test_cursor.execute(sql_verify_syntax)
