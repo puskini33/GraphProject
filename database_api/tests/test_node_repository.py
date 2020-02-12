@@ -189,7 +189,7 @@ class TestNodeRepository(unittest.TestCase):
         # delete new_node
         node_repository.delete_node(node_id)
         node_repository.close_connection()
-        
+
         # verify if id exists
         sql_verify_syntax = f"SELECT node.id FROM node WHERE node.name = '{node_name}' AND node.graph_id = '{graph_id}'"
         test_cursor.execute(sql_verify_syntax)
