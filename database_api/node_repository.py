@@ -9,6 +9,8 @@ class NodeRepository(BaseRepository):
     def insert_node(self, node_name: str, graph_id: int):
         inserted_values = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"
         self.execute_query(inserted_values)
+        self.execute_query("SELECT last_insert_rowid();")
+        return self.cursor.fetchall()[0][0]
 
     def get_node(self, node_id: int) -> list:
         node_values = f"SELECT * FROM node WHERE node.id = '{node_id}';"

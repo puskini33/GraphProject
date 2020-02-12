@@ -26,18 +26,18 @@ class TestNodeRepository(unittest.TestCase):
         node_name = 'A'
         graph_id = 1
 
-        # insert node via node repository
-        node_repository.insert_node(node_name, graph_id)
+        # insert_graph node via node repository
+        node_id_from_repository = node_repository.insert_node(node_name, graph_id)
         node_repository.close_connection()
 
         # select name inserted node
-        sql_select = f"SELECT node.name FROM node WHERE node.name = '{node_name}';"
+        sql_select = f"SELECT id FROM node WHERE node.name = '{node_name}';"
         test_cursor.execute(sql_select)
         test_database_connection.commit()
-        selected_node_name = test_cursor.fetchall()[0][0]
+        node_id = test_cursor.fetchall()[0][0]
 
         # assert
-        self.assertEqual(selected_node_name, node_name)
+        self.assertEqual(node_id_from_repository, node_id)
 
     def test_get_node(self):
         # prepare
@@ -48,12 +48,12 @@ class TestNodeRepository(unittest.TestCase):
         graph_id = 1
         graph_name = 'Gygy'
 
-        # insert new graph
+        # insert_graph new graph
         sql_insert_graph = f"INSERT OR IGNORE INTO graph VALUES ('{graph_id}', '{graph_name}');"
         test_cursor.execute(sql_insert_graph)
         test_database_connection.commit()
 
-        # insert new node
+        # insert_graph new node
         sql_insert_node = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"
         test_cursor.execute(sql_insert_node)
         test_database_connection.commit()
@@ -86,12 +86,12 @@ class TestNodeRepository(unittest.TestCase):
         graph_id = 1
         graph_name = 'Tata'
         
-        # manually insert new_graph
+        # manually insert_graph new_graph
         sql_insert_graph = f"INSERT OR IGNORE INTO graph (id, name) VALUES ('{graph_id}', '{graph_name}');"
         test_cursor.execute(sql_insert_graph)
         test_database_connection.commit()
 
-        # manually insert new_node
+        # manually insert_graph new_node
         sql_insert_node = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"
         test_cursor.execute(sql_insert_node)
         test_database_connection.commit()
@@ -122,12 +122,12 @@ class TestNodeRepository(unittest.TestCase):
         graph_id = 1
         graph_name = 'Haha'
 
-        # manually insert new_graph
+        # manually insert_graph new_graph
         sql_insert_graph = f"INSERT OR IGNORE INTO graph (id, name) VALUES ('{graph_id}', '{graph_name}');"
         test_cursor.execute(sql_insert_graph)
         test_database_connection.commit()
 
-        # manually insert new_node
+        # manually insert_graph new_node
         sql_insert_statement = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"
         test_cursor.execute(sql_insert_statement)
         test_database_connection.commit()
@@ -157,7 +157,7 @@ class TestNodeRepository(unittest.TestCase):
         test_database_connection, test_cursor, node_repository = self.set_database_connection()
 
         # act
-        # insert new_node
+        # insert_graph new_node
         node_name = 'D'
         graph_id = 1
         sql_insert_query = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"

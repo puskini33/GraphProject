@@ -5,7 +5,7 @@ local_graph = GraphRepository()
 # connect to database and create cursor
 
 # execute queries
-local_graph.insert('Flora Graph')
+local_graph.insert_graph('Flora Graph')
 
 
 # close database

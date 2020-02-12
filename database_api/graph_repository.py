@@ -6,11 +6,12 @@ class GraphRepository(BaseRepository):
     def __init__(self, path):
         super().__init__(path)
 
-    def insert(self, graph_name: str):
-        # TODO: make that insert returns string and not list
+    def insert_graph(self, graph_name: str) -> str:
         inserted_values = f"INSERT OR IGNORE INTO graph (name) " \
                           f"VALUES ('{graph_name}')"
         self.execute_query(inserted_values)
+        self.execute_query("SELECT last_insert_rowid();")
+        return self.cursor.fetchall()[0][0]
 
     def get_graph(self, graph_id: int) -> list:
         certain_graph = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"

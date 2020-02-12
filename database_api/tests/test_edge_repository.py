@@ -52,14 +52,14 @@ class TestEdgeRepository(unittest.TestCase):
         test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Gaga'
         self.insert_graph(test_database_connection, test_cursor, graph_name)
 
         # get id of graph
         graph_id = self.get_graph_id(test_database_connection, test_cursor, graph_name)
 
-        # insert 2 nodes
+        # insert_graph 2 nodes
         node_start_name = 'L'
         self.insert_node(test_database_connection, test_cursor, node_start_name, graph_id)
 
@@ -70,35 +70,36 @@ class TestEdgeRepository(unittest.TestCase):
         node_start_id = self.get_node_id(test_database_connection, test_cursor, node_start_name, graph_id)
         node_end_id = self.get_node_id(test_database_connection, test_cursor, node_end_name, graph_id)
 
-        # insert new_edge via edge_repository
+        # insert_graph new_edge via edge_repository
         edge_name = 'LG'
         edge_cost = 34
-        edge_repository.insert_edge(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+        edge_id_from_repository = edge_repository.insert_edge(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
         edge_repository.close_connection()
 
         # select values of new edge
-        sql_select_edge = f"SELECT name, cost FROM edge WHERE node_start_id = '{node_start_id}' AND " \
+        sql_select_edge = f"SELECT id FROM edge WHERE name = '{edge_name}' AND cost = '{edge_cost}' " \
+                          f"AND node_start_id = '{node_start_id}' AND " \
                           f"node_end_id = '{node_end_id}' AND graph_id = '{graph_id}';"
         test_cursor.execute(sql_select_edge)
         test_database_connection.commit()
-        edge_values = test_cursor.fetchall()[0]
+        edge_id = test_cursor.fetchall()[0][0]
 
         # assert
-        self.assertEqual(edge_values, (edge_name, edge_cost))
+        self.assertEqual(edge_id_from_repository, edge_id)
 
     def test_get_edge(self):
         # prepare
         test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Mimo'
         self.insert_graph(test_database_connection, test_cursor, graph_name)
 
         # get id of graph
         graph_id = self.get_graph_id(test_database_connection, test_cursor, graph_name)
 
-        # insert 2 nodes
+        # insert_graph 2 nodes
         node_start_name = 'K'
         self.insert_node(test_database_connection, test_cursor, node_start_name, graph_id)
 
@@ -109,7 +110,7 @@ class TestEdgeRepository(unittest.TestCase):
         node_start_id = self.get_node_id(test_database_connection, test_cursor, node_start_name, graph_id)
         node_end_id = self.get_node_id(test_database_connection, test_cursor, node_end_name, graph_id)
 
-        # insert new edge
+        # insert_graph new edge
         edge_name = 'KA'
         edge_cost = 49
         sql_insert_new_edge = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \
@@ -125,7 +126,7 @@ class TestEdgeRepository(unittest.TestCase):
         edge_id = test_cursor.fetchall()[0][0]
 
         # get values of edge via edge_repository
-        edge_values = edge_repository.get_edge(edge_id)[0]
+        edge_values = edge_repository.get_edge_values(edge_id)[0]
         edge_repository.close_connection()
 
         # assert
@@ -136,14 +137,14 @@ class TestEdgeRepository(unittest.TestCase):
         test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Cara'
         self.insert_graph(test_database_connection, test_cursor, graph_name)
 
         # get id of graph
         graph_id = self.get_graph_id(test_database_connection, test_cursor, graph_name)
 
-        # insert 2 nodes
+        # insert_graph 2 nodes
         node_start_name = 'P'
         self.insert_node(test_database_connection, test_cursor, node_start_name, graph_id)
 
@@ -154,7 +155,7 @@ class TestEdgeRepository(unittest.TestCase):
         node_start_id = self.get_node_id(test_database_connection, test_cursor, node_start_name, graph_id)
         node_end_id = self.get_node_id(test_database_connection, test_cursor, node_end_name, graph_id)
 
-        # insert new edge
+        # insert_graph new edge
         edge_name = 'PE'
         edge_cost = 56
         sql_insert_new_edge = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \
@@ -174,14 +175,14 @@ class TestEdgeRepository(unittest.TestCase):
         test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Mera'
         self.insert_graph(test_database_connection, test_cursor, graph_name)
 
         # get id of graph
         graph_id = self.get_graph_id(test_database_connection, test_cursor, graph_name)
 
-        # insert 2 nodes
+        # insert_graph 2 nodes
         node_start_name = 'V'
         self.insert_node(test_database_connection, test_cursor, node_start_name, graph_id)
 
@@ -192,7 +193,7 @@ class TestEdgeRepository(unittest.TestCase):
         node_start_id = self.get_node_id(test_database_connection, test_cursor, node_start_name, graph_id)
         node_end_id = self.get_node_id(test_database_connection, test_cursor, node_end_name, graph_id)
 
-        # insert new edge
+        # insert_graph new edge
         edge_name = 'VS'
         edge_cost = 2
         sql_insert_new_edge = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \
@@ -227,14 +228,14 @@ class TestEdgeRepository(unittest.TestCase):
         test_database_connection, test_cursor, edge_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Tare'
         self.insert_graph(test_database_connection, test_cursor, graph_name)
 
         # get id of graph
         graph_id = self.get_graph_id(test_database_connection, test_cursor, graph_name)
 
-        # insert 2 nodes
+        # insert_graph 2 nodes
         node_start_name = 'G'
         self.insert_node(test_database_connection, test_cursor, node_start_name, graph_id)
 
@@ -245,7 +246,7 @@ class TestEdgeRepository(unittest.TestCase):
         node_start_id = self.get_node_id(test_database_connection, test_cursor, node_start_name, graph_id)
         node_end_id = self.get_node_id(test_database_connection, test_cursor, node_end_name, graph_id)
 
-        # insert new edge
+        # insert_graph new edge
         edge_name = 'GM'
         edge_cost = 29
         sql_insert_new_edge = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \

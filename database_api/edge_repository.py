@@ -6,12 +6,14 @@ class EdgeRepository(BaseRepository):
     def __init__(self, path):
         super().__init__(path)
 
-    def insert_edge(self, edge_name, edge_cost, node_start_id, node_end_id, graph_id):
+    def insert_edge(self, edge_name, edge_cost, node_start_id, node_end_id, graph_id) -> str:
         inserted_values = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \
                           f"VALUES ('{edge_name}', '{edge_cost}', '{node_start_id}', '{node_end_id}', '{graph_id}');"
         self.execute_query(inserted_values)
+        self.execute_query("SELECT last_insert_rowid();")
+        return self.cursor.fetchall()[0][0]
 
-    def get_edge(self, edge_id):
+    def get_edge_values(self, edge_id):
         edge_values = f"SELECT * FROM edge WHERE edge.id = '{edge_id}';"
         self.execute_query(edge_values)
         return self.cursor.fetchall()

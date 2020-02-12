@@ -22,15 +22,15 @@ class TestGraphRepository(unittest.TestCase):
 
         # act
         graph_name = 'XcV4'
-        graph_repository.insert(graph_name)
+        graph_id_from_repository = graph_repository.insert_graph(graph_name)
         graph_repository.close_connection()
 
-        test_cursor.execute(f"SELECT graph.name FROM graph WHERE name = '{graph_name}'")
+        test_cursor.execute(f"SELECT id FROM graph WHERE name = '{graph_name}'")
         test_database_connection.commit()
-        name_existing_graph = test_cursor.fetchall()[0][0]
+        graph_id = test_cursor.fetchall()[0][0]
 
         # assert
-        self.assertEqual(name_existing_graph, graph_name)
+        self.assertEqual(graph_id_from_repository, graph_id)
 
     def test_get_graph(self):
 
@@ -40,7 +40,7 @@ class TestGraphRepository(unittest.TestCase):
         # act
         graph_name = 'gaga'
 
-        # insert new_graph
+        # insert_graph new_graph
         sql_insert_graph = f"INSERT OR IGNORE INTO graph(name) VALUES ('{graph_name}');"
         test_cursor.execute(sql_insert_graph)
         test_database_connection.commit()
@@ -70,7 +70,7 @@ class TestGraphRepository(unittest.TestCase):
         test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
-        # insert new graph
+        # insert_graph new graph
         graph_name = 'Nar'
         sql_insert_syntax = f"INSERT OR IGNORE INTO graph (name) " \
                             f"VALUES ('{graph_name}');"
@@ -102,7 +102,7 @@ class TestGraphRepository(unittest.TestCase):
         test_database_connection, test_cursor, graph_repository = self.set_database_connection()
 
         # act
-        # insert new_graph
+        # insert_graph new_graph
         graph_name = 'GdfeA'
         insert_sql_syntax = f"INSERT OR IGNORE INTO graph (name) " \
                             f"VALUES ('{graph_name}');"
