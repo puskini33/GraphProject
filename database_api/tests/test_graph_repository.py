@@ -53,6 +53,7 @@ class TestGraphRepository(unittest.TestCase):
 
         # get graph name from graph_repository
         graph_values_from_graph_repository = graph_repository.get_graph(graph_id)
+        graph_repository.close_connection()
 
         # manually get graph_name
         sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
@@ -91,7 +92,7 @@ class TestGraphRepository(unittest.TestCase):
         # update graph
         graph_updated_name = 'Updated Name'
         graph_repository.update_graph(graph_id, graph_updated_name)
-        test_database_connection.commit()
+        graph_repository.close_connection()
 
         # select updated graph
         sql_select = f"SELECT graph.name FROM graph WHERE graph.id = '{graph_id}';"
@@ -128,6 +129,7 @@ class TestGraphRepository(unittest.TestCase):
 
         # delete new_graph
         graph_repository.delete_graph(graph_id)
+        graph_repository.close_connection()
 
         # select new_graph
         sql_query = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
