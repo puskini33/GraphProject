@@ -26,13 +26,14 @@ class EdgeRepository(BaseRepository):
                             f"ON edge.node_start_id = node.id " \
                             f"WHERE node.id = '{node_id}';"
         self.execute_query(node_edges_values)
+        return self.cursor.fetchall()
 
-    def update(self, edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id):
+    def update_edge(self, edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id):
         updated_values = f"UPDATE edge " \
                          f"SET name = '{edge_name}', cost = '{edge_cost}', node_start_id = '{node_start_id}', " \
-                         f" node_end_id = '{node_end_id}' graph_id = '{graph_id}'  WHERE id = '{edge_id}';"
+                         f" node_end_id = '{node_end_id}', graph_id = '{graph_id}'  WHERE id = '{edge_id}';"
         self.execute_query(updated_values)
 
-    def delete(self, edge_id):
+    def delete_edge(self, edge_id):
         deleted_values = f"DELETE FROM edge WHERE id = '{edge_id}';"
         self.execute_query(deleted_values)
