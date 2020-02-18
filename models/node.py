@@ -1,11 +1,9 @@
 class Node(object):
 
-    def __init__(self, node_name, graph_id):
+    def __init__(self, node_id, node_name, graph_id):
+        self.node_id = node_id
         self.node_name = node_name
-        self.prev_node_id = prev_node_id
-        self.next_node_id = next_node_id
         self.graph_id = graph_id
 
     def __repr__(self):
-        return f'[Node Name: {self.node_name}, PrevNode: {self.prev_node_id}, ' \
-                f'NextNode: {self.next_node_id}, Graph Id: {self.graph_id}]'
+        return f'[Node Id: {self.node_id}, Node Name: {self.node_name}, Graph Id: {self.graph_id}]'
