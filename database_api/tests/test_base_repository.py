@@ -39,11 +39,23 @@ class PrepareDatabase(object):
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]
 
+    def get_graph_values(self, graph_id):
+        sql_select = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
+        self.test_cursor.execute(sql_select)
+        self.test_database_connection.commit()
+        return self.test_cursor.fetchall()
+
     def get_node_id(self, node_name, graph_id):
         sql_get_node_start_name = f"SELECT node.id FROM node WHERE node.name = '{node_name}' AND graph_id = '{graph_id}';"
         self.test_cursor.execute(sql_get_node_start_name)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]
+
+    def get_node_values(self, inserted_node_id):
+        sql_syntax = f"SELECT * FROM node WHERE node.id = '{inserted_node_id}';"
+        self.test_cursor.execute(sql_syntax)
+        self.test_database_connection.commit()
+        return self.test_cursor.fetchall()
 
     def get_edge_id(self, edge_name, edge_cost, node_start_id, node_end_id, graph_id):
         sql_get_edge_id = f"SELECT id FROM edge WHERE name = '{edge_name}' AND cost = '{edge_cost}' AND " \

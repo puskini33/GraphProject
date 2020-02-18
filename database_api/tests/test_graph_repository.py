@@ -1,129 +1,107 @@
 from database_api.graph_repository import GraphRepository
+from database_api.tests.test_base_repository import PrepareDatabase
 import unittest
 import sqlite3
 
 
 class TestGraphRepository(unittest.TestCase):
 
-    @staticmethod
-    def set_database_connection():
-        path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
-        graph_repository = GraphRepository(path)
-        test_database_connection = sqlite3.connect(path)
-        with test_database_connection:
-            test_cursor = test_database_connection.cursor()
-            test_cursor.execute("DELETE FROM graph;")
-            test_database_connection.commit()
-        return test_database_connection, test_cursor, graph_repository
+    def __init__(self, *args, **kwargs):
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
+        self.graph_repository = GraphRepository(self.path)
+        self.test_database_connection = sqlite3.connect(self.path)
+        with self.test_database_connection:
+            self.test_cursor = self.test_database_connection.cursor()
+            self.database_preparation = PrepareDatabase(self.test_database_connection, self.test_cursor)
+        super().__init__(*args, **kwargs)
+
+    def delete_values_from_database(self):
+        self.database_preparation.delete_graph_values()
 
     def test_insert_graph(self):
         # prepare
-        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
+        self.delete_values_from_database()
 
         # act
         graph_name = 'XcV4'
-        graph_id_from_repository = graph_repository.insert_graph(graph_name)
-        graph_repository.close_connection()
 
-        test_cursor.execute(f"SELECT id FROM graph WHERE name = '{graph_name}'")
-        test_database_connection.commit()
-        graph_id = test_cursor.fetchall()[0][0]
+        # get graph id from graph_repository
+        graph_id_from_repository = self.graph_repository.insert_graph(graph_name)
+        self.graph_repository.close_connection()
+
+        # get id of graph
+        graph_id = self.database_preparation.get_graph_id(graph_name)
 
         # assert
         self.assertEqual(graph_id_from_repository, graph_id)
 
     def test_get_graph(self):
-
         # prepare
-        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
+        self.delete_values_from_database()
 
         # act
         graph_name = 'gaga'
 
         # insert_graph new_graph
-        sql_insert_graph = f"INSERT OR IGNORE INTO graph(name) VALUES ('{graph_name}');"
-        test_cursor.execute(sql_insert_graph)
-        test_database_connection.commit()
+        self.database_preparation.insert_graph(graph_name)
 
-        # get id of new graph
-        sql_select_graph = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
-        test_cursor.execute(sql_select_graph)
-        test_database_connection.commit()
-        graph_id = test_cursor.fetchall()[0][0]
+        # get id of graph
+        graph_id = self.database_preparation.get_graph_id(graph_name)
 
         # get graph name from graph_repository
-        graph_values_from_graph_repository = graph_repository.get_graph(graph_id)
-        graph_repository.close_connection()
+        graph_values_from_graph_repository = self.graph_repository.get_graph(graph_id)
+        self.graph_repository.close_connection()
 
-        # manually get graph_name
-        sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
-        test_cursor.execute(sql_select)
-        test_database_connection.commit()
-        graph_values = test_cursor.fetchall()
+        # manually get graph values
+        graph_values = self.database_preparation.get_graph_values(graph_id)
 
         # assert
         self.assertEqual(graph_values, graph_values_from_graph_repository)
 
     def test_update_graph(self):
-
         # prepare
-        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new graph
         graph_name = 'Nar'
-        sql_insert_syntax = f"INSERT OR IGNORE INTO graph (name) " \
-                            f"VALUES ('{graph_name}');"
-        test_cursor.execute(sql_insert_syntax)
-        test_database_connection.commit()
+        self.database_preparation.insert_graph(graph_name)
 
-        # get the id of new graph
-        sql_select_syntax = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
-        test_cursor.execute(sql_select_syntax)
-        test_database_connection.commit()
-        graph_id = test_cursor.fetchall()[0][0]
+        # get id of graph
+        graph_id = self.database_preparation.get_graph_id(graph_name)
 
         # update graph
         graph_updated_name = 'Updated Name'
-        graph_repository.update_graph(graph_id, graph_updated_name)
-        graph_repository.close_connection()
+        self.graph_repository.update_graph(graph_id, graph_updated_name)
+        self.graph_repository.close_connection()
 
         # select updated graph
         sql_select = f"SELECT graph.name FROM graph WHERE graph.id = '{graph_id}';"
-        test_cursor.execute(sql_select)
-        test_database_connection.commit()
-        graph_name = test_cursor.fetchall()
+        self.test_cursor.execute(sql_select)
+        self.test_database_connection.commit()
+        graph_name = self.test_cursor.fetchall()
 
         # assert
         self.assertEqual(graph_name, [(graph_updated_name,)])
 
     def test_delete_graph(self):
         # prepare
-        test_database_connection, test_cursor, graph_repository = self.set_database_connection()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new_graph
         graph_name = 'GdfeA'
-        insert_sql_syntax = f"INSERT OR IGNORE INTO graph (name) " \
-                            f"VALUES ('{graph_name}');"
-        test_cursor.execute(insert_sql_syntax)
-        test_database_connection.commit()
+        self.database_preparation.insert_graph(graph_name)
 
-        # get id of new graph
-        sql_select = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
-        test_cursor.execute(sql_select)
-        test_database_connection.commit()
-        graph_id = test_cursor.fetchall()[0][0]
+        # get id of graph
+        graph_id = self.database_preparation.get_graph_id(graph_name)
 
         # delete new_graph
-        graph_repository.delete_graph(graph_id)
-        graph_repository.close_connection()
+        self.graph_repository.delete_graph(graph_id)
+        self.graph_repository.close_connection()
 
-        # select new_graph
-        sql_query = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
-        test_cursor.execute(sql_query)
-        test_database_connection.commit()
-        graph_values = test_cursor.fetchall()
+        # select graph values
+        graph_values = self.database_preparation.get_graph_values(graph_id)
 
         # assert
         self.assertEqual(graph_values, [])

@@ -15,14 +15,14 @@ class TestEdgeRepository(TestCase):
             self.database_preparation = PrepareDatabase(self.test_database_connection, self.test_cursor)
         super().__init__(*args, **kwargs)
 
-    def prepare_database(self):
+    def delete_values_from_database(self):
         self.database_preparation.delete_graph_values()
         self.database_preparation.delete_node_values()
         self.database_preparation.delete_edge_values()
 
     def test_insert_edge(self):
         # prepare
-        self.prepare_database()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new graph
@@ -57,7 +57,7 @@ class TestEdgeRepository(TestCase):
 
     def test_get_edge(self):
         # prepare
-        self.prepare_database()
+        self.delete_values_from_database()
 
         # act
         # insert_graph
@@ -95,7 +95,7 @@ class TestEdgeRepository(TestCase):
 
     def test_get_edge_nodes(self):
         # prepare
-        self.prepare_database()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new graph
@@ -130,7 +130,7 @@ class TestEdgeRepository(TestCase):
 
     def test_update_edge(self):
         # prepare
-        self.prepare_database()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new graph
@@ -176,7 +176,7 @@ class TestEdgeRepository(TestCase):
 
     def test_delete_edge(self):
         # prepare
-        self.prepare_database()
+        self.delete_values_from_database()
 
         # act
         # insert_graph new graph
