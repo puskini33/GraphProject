@@ -1,5 +1,3 @@
-# TODO: write class for all repositories where they take the path and dispose method that closes the database
-# connection_to_database attribute, check if cursor can be made an attribute,
 from database_api.config_database import ConfigDatabase
 import sqlite3
 

@@ -33,4 +33,3 @@ class NodeRepository(BaseRepository):
     def delete_node(self, node_id: int):
         deleted_values = f"DELETE FROM node WHERE id = '{node_id}';"
         self.execute_query(deleted_values)
-
