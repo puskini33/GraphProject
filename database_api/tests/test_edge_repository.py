@@ -46,7 +46,8 @@ class TestEdgeRepository(TestCase):
             # insert_graph new_edge via edge_repository
             edge_name = 'LG'
             edge_cost = 34
-            edge_id_from_repository = self.edge_repository.insert_edge(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+            edge_id_from_repository = self.edge_repository.insert_edge(edge_name, edge_cost, node_start_id,
+                                                                       node_end_id, graph_id)
             self.edge_repository.close_connection()
 
             # manually get id of new edge

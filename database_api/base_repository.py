@@ -4,7 +4,7 @@ import sqlite3
 
 class BaseRepository(object):
 
-    def __init__(self, path):
+    def __init__(self, path: str):
         if path:
             self.path = path
         else:
@@ -12,7 +12,7 @@ class BaseRepository(object):
         self.connection = sqlite3.connect(self.path)
         self.cursor = self.connection.cursor()
 
-    def execute_query(self, sql_query):
+    def execute_query(self, sql_query: str):
         self.cursor.execute(sql_query)
         self.connection.commit()
 
