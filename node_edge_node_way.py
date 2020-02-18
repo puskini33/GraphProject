@@ -1,4 +1,4 @@
-class NodeArchNode(object):
+class GraphNodeEdge(object):
 
     def __init__(self, begin_node, end_node):
         self.begin_node = begin_node

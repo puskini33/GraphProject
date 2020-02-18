@@ -1,9 +1,12 @@
-class Arch(object):
+class Edge(object):
 
-    def __init__(self, length, node1, node2):
-        self.length = length
-        self.node1 = node1
-        self.node2 = node2
+    def __init__(self, edge_name, edge_cost, start_node_id, end_node_id, graph_id):
+        self.name = edge_name
+        self.cost = edge_cost
+        self.start_node_id = start_node_id
+        self.end_node_id = end_node_id
+        self.graph_id = graph_id
 
     def __repr__(self):
-        return f'[{self.length}, {self.node1}, {self.node2}]'
+        return f'[Edge Name: {self.name}, Edge Cost: {self.cost}, Start Node Id: {self.start_node_id},' \
+               f' End Node Id: {self.end_node_id}, Graph Id: {self.graph_id}]'
