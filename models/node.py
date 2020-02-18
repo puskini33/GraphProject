@@ -1,6 +1,6 @@
 class Node(object):
 
-    def __init__(self, node_name, graph_id, prev_node_id=None, next_node_id=None):
+    def __init__(self, node_name, graph_id):
         self.node_name = node_name
         self.prev_node_id = prev_node_id
         self.next_node_id = next_node_id
