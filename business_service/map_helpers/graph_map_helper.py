@@ -10,8 +10,7 @@ class GraphMapHelper(object):
         return graph_model
 
     @staticmethod
-    def graph_model_to_db_entity(graph_id, graph_name):
-        graph_model = GraphModel()
+    def graph_model_db_entity(graph_model, graph_id, graph_name):
         graph_model.graph_id = graph_id
         graph_model.graph_name = graph_name
         return graph_model
