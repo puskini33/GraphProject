@@ -1,6 +1,6 @@
-class Graph(object):
+class GraphModel(object):
 
-    def __init__(self, graph_id: int, graph_name: str):
+    def __init__(self, graph_id: int = -1, graph_name: str = ''):  # TODO: I do not see why GraphModel must have an id.
         self.graph_id = graph_id
         self.graph_name = graph_name
 

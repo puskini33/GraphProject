@@ -1,4 +1,4 @@
-class Edge(object):
+class EdgeModel(object):
 
     def __init__(self, edge_id: int, edge_name: str, edge_cost: int, start_node_id: int, end_node_id: int,
                  graph_id: int):

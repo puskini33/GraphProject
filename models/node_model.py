@@ -1,4 +1,4 @@
-class Node(object):
+class NodeModel(object):
 
     def __init__(self, node_id: int, node_name: str, graph_id: int):
         self.node_id = node_id
