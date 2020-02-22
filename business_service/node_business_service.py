@@ -13,16 +13,16 @@ class NodeBusinessService(object):
         node_model.node_id = node_id
         return node_model
 
-    def get_node_model(self, node_id: int) -> list:
+    def get_node_model(self, node_id: int) -> NodeModel:
         list_values_node = self.node_repository.get_node(node_id)
-        return NodeMapHelper.db_entity_to_node_model(list_values_node)
+        return NodeMapHelper.db_entity_to_node_model(list_values_node)[0]
 
     def get_node_models(self, graph_id: int) -> list:
         list_values_nodes = self.node_repository.get_graph_nodes(graph_id)
         return NodeMapHelper.db_entity_to_node_model(list_values_nodes)
 
     def update_node(self, node_model: NodeModel) -> NodeModel:
-        self.node_repository.update_node(node_model.node_name, node_model.graph_id, node_model.graph_id)
+        self.node_repository.update_node(node_model.node_id, node_model.node_name, node_model.graph_id)
         return node_model
 
     def delete_node(self, node_id: int):
