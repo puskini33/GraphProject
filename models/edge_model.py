@@ -10,6 +10,6 @@ class EdgeModel(object):
         self.graph_id = graph_id
 
     def __repr__(self) -> str:
-        return f'[Edge Id: {self.edge_id}, Edge Name: {self.edge_name}, Edge Cost: {self.edge_cost}, ' \
+        return f'Edge Id: {self.edge_id}, Edge Name: {self.edge_name}, Edge Cost: {self.edge_cost}, ' \
                f'Start Node Id: {self.start_node_id},' \
-               f' End Node Id: {self.end_node_id}, Graph Id: {self.graph_id}]'
+               f'End Node Id: {self.end_node_id}, Graph Id: {self.graph_id}'
