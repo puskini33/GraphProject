@@ -1,6 +1,6 @@
 class NodeModel(object):
 
-    def __init__(self, node_id: int, node_name: str, graph_id: int):
+    def __init__(self, node_id: int = -1, node_name: str = '', graph_id: int = -1):
         self.node_id = node_id
         self.node_name = node_name
         self.graph_id = graph_id
