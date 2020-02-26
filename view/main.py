@@ -1,6 +1,4 @@
 from tkinter import *
-
-
 from view.draw_circle import DrawCircle
 from view.draw_line import DrawLine
 

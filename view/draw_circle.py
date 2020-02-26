@@ -20,8 +20,7 @@ class DrawCircle(object):
             self.x1 = event.x
             self.y1 = event.y
             self.click_number = 1
-        else:
-            self.x2 = event.x
-            self.y2 = event.y
+            self.x2 = self.x1 + 50
+            self.y2 = self.y1 + 50
             self.canvas.create_oval(self.x1, self.y1, self.x2, self.y2, fill='black', width=3)
             self.click_number = 0
