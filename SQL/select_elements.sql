@@ -33,3 +33,16 @@ ON node.graph_id = graph.id
 JOIN edge
 ON edge.node_start_id = node.id
 WHERE node.id = 2;
+
+-- Display -> graph.name , node_start.name, node_end.name, edge.cost
+SELECT graph.name AS graph_name,
+node_start.name AS node_start_name,
+node_end.name AS node_end_name,
+edge.cost AS edge_cost
+FROM edge
+JOIN graph
+ON edge.graph_id = graph.id
+JOIN node AS node_start
+ON edge.node_start_id = node_start.id
+JOIN node AS node_end
+ON edge.node_end_id = node_end.id;

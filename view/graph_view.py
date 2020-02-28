@@ -2,12 +2,14 @@ from tkinter import filedialog
 from tkinter import *
 
 
-class Graph(Frame):
+class Graph(Entry):
 
     def __init__(self, window):
         self.window = window
         self.canvas = Canvas(self.window, width=700, height=700, bg='white')
         self.clicked_circles = []
+        self.changes = [""]
+        self.steps = int()
         super().__init__()
         self.init_ui()
 
@@ -17,6 +19,8 @@ class Graph(Frame):
         self.canvas.bind('<Button-3>', self.draw_oval)
         self.canvas.bind('<Button-1>', self.select_circles)
         self.canvas.bind('<Button-2>', self.delete_all)
+        self.bind("<Control-z>", self.undo)
+        self.bind("<Key>", self.add_changes)
 
         self.master.title('GraphIt')
         menu_bar = Menu(self.master)
@@ -24,19 +28,23 @@ class Graph(Frame):
 
         drop_down_menu = Menu(menu_bar)
         menu_bar.add_cascade(label="File", menu=drop_down_menu)
-        drop_down_menu.add_command(label="Save", command=self.save_graphit)
+        # drop_down_menu.add_command(label="Undo", command=self.undo)
         drop_down_menu.add_command(label="Open..", command=self.open_graphit)
         drop_down_menu.add_command(label="Exit", command=self.exit_graphit)
 
+    def undo(self, event=None):
+        if self.steps != 0:
+            self.steps -= 1
+            self.delete(0, END)
+            self.insert(END, self.changes[self.steps])
+
+    def add_changes(self, event=None):
+        if self.get() != self.changes[-1]:
+            self.changes.append(self.get())
+            self.steps += 1
+
     def exit_graphit(self):
         self.quit()
-
-    def save_graphit(self):
-        """self.window.filename = filedialog.asksaveasfilename(initialdir="/", title="Select file",
-                                                            filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*")),
-                                                            confirmoverwrite=False)"""
-
-
 
     def open_graphit(self):
         self.window.filename = filedialog.askopenfilename(initialdir="/", title="Select file",

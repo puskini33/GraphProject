@@ -23,7 +23,7 @@ class TestGraphRepository(unittest.TestCase):
             self.delete_values_from_database()
 
             # act
-            graph_name = 'XcV4'
+            graph_name = 'OleGraph'
 
             # get graph id from graph_repository
             graph_id_from_repository = self.graph_repository.insert_graph(graph_name)
@@ -37,7 +37,7 @@ class TestGraphRepository(unittest.TestCase):
         finally:
             self.test_database_connection.close()
 
-    def test_get_graph(self):
+    """def test_get_graph(self):
         try:
             # prepare
             self.delete_values_from_database()
@@ -115,4 +115,4 @@ class TestGraphRepository(unittest.TestCase):
             # assert
             self.assertEqual(graph_values, [])
         finally:
-            self.test_database_connection.close()
+            self.test_database_connection.close()"""

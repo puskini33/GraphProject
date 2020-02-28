@@ -1,6 +1,8 @@
 CREATE TABLE if not exists node (
 	id integer primary key,
 	name text,
+	x_coord integer,
+	y_coord integer,
 	graph_id integer,
 	FOREIGN KEY(graph_id) REFERENCES graph(id));
 
