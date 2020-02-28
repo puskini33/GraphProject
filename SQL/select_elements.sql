@@ -46,3 +46,11 @@ JOIN node AS node_start
 ON edge.node_start_id = node_start.id
 JOIN node AS node_end
 ON edge.node_end_id = node_end.id;
+
+
+-- Display coordinates of edges
+SELECT node.x_coord, node.y_coord
+FROM edge
+JOIN node
+ON edge.start_node_id = node.id
+;
