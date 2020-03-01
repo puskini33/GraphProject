@@ -1,12 +1,12 @@
-from database_api.base_repository import BaseRepository
+from repository_service.base_repository import BaseRepository
 
 
 class GraphRepository(BaseRepository):
 
-    def __init__(self, path: str = 'E:\\PYTHON\\code\\GraphProject\\SQL\\graph.db'):
+    def __init__(self, path: str = None):
         super().__init__(path)
 
-    def insert_graph(self, graph_name: str) -> str:
+    def insert_graph(self, graph_name: str) -> int:
         inserted_values = f"INSERT OR IGNORE INTO graph (name) " \
                           f"VALUES ('{graph_name}')"
         self.execute_query(inserted_values)

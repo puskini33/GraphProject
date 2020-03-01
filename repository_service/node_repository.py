@@ -1,13 +1,14 @@
-from database_api.base_repository import BaseRepository
+from repository_service.base_repository import BaseRepository
 
 
 class NodeRepository(BaseRepository):
 
-    def __init__(self, path: str):
+    def __init__(self, path: str = None):
         super().__init__(path)
 
-    def insert_node(self, node_name: str, graph_id: int):
-        inserted_values = f"INSERT OR IGNORE INTO node (name, graph_id) VALUES ('{node_name}', '{graph_id}');"
+    def insert_node(self, node_name: str, node_x_coord: int, node_y_coord: int, graph_id: int) -> int:
+        inserted_values = f"INSERT OR IGNORE INTO node (name, node_x_coord, node_y_coord, graph_id) " \
+                          f"VALUES ('{node_name}', '{node_x_coord}', '{node_y_coord}', '{graph_id}');"
         self.execute_query(inserted_values)
         self.execute_query("SELECT last_insert_rowid();")
         return self.cursor.fetchall()[0][0]
@@ -18,7 +19,8 @@ class NodeRepository(BaseRepository):
         return self.cursor.fetchall()
 
     def get_graph_nodes(self, graph_id: int) -> list:
-        graph_nodes = f"SELECT node.id AS node_id, node.name AS node_name, graph.id AS graph_id "\
+        graph_nodes = f"SELECT node.id AS node_id, node.name AS node_name, node.node_x_coord AS node_x_coord, " \
+                      f"node.node_y_coord AS node_y_coord, graph.id AS graph_id "\
                       f"FROM node "\
                       f"JOIN graph "\
                       f"ON node.graph_id = graph.id "\
@@ -26,8 +28,9 @@ class NodeRepository(BaseRepository):
         self.execute_query(graph_nodes)
         return self.cursor.fetchall()
 
-    def update_node(self, node_id: int, node_name: str, graph_id: int):
-        updated_values = f"UPDATE node SET name = '{node_name}', graph_id = '{graph_id}'  WHERE id = '{node_id}';"
+    def update_node(self, node_id: int, node_name: str, node_x_coord: int, node_y_coord: int, graph_id: int):
+        updated_values = f"UPDATE node SET name = '{node_name}', node_x_coord = '{node_x_coord}', " \
+                         f"node_y_coord = '{node_y_coord}', graph_id = '{graph_id}'  WHERE id = '{node_id}';"
         self.execute_query(updated_values)
 
     def delete_node(self, node_id: int):

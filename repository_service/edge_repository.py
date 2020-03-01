@@ -1,9 +1,9 @@
-from database_api.base_repository import BaseRepository
+from repository_service.base_repository import BaseRepository
 
 
 class EdgeRepository(BaseRepository):
 
-    def __init__(self, path: str):
+    def __init__(self, path: str = None):
         super().__init__(path)
 
     def insert_edge(self, edge_name: str, edge_cost: int, start_node_id: int, end_node_id: int, graph_id: int) -> int:
