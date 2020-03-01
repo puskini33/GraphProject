@@ -1,5 +1,5 @@
-from database_api.graph_repository import GraphRepository
-from database_api.tests.test_base_repository import PrepareDatabase
+from repository_service.graph_repository import GraphRepository
+from repository_service.tests.test_base_repository import PrepareDatabase
 import unittest
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestGraphRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
         self.graph_repository = GraphRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()

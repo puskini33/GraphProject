@@ -1,5 +1,5 @@
-from database_api.node_repository import NodeRepository
-from database_api.tests.test_base_repository import PrepareDatabase
+from repository_service.node_repository import NodeRepository
+from repository_service.tests.test_base_repository import PrepareDatabase
 import unittest
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestNodeRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
         self.node_repository = NodeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
@@ -33,11 +33,13 @@ class TestNodeRepository(unittest.TestCase):
 
             # insert_graph node via node repository
             node_name = 'A'
-            node_id_from_repository = self.node_repository.insert_node(node_name, graph_id)
+            node_x_coord = 123
+            node_y_coord = 234
+            node_id_from_repository = self.node_repository.insert_node(node_name, node_x_coord, node_y_coord, graph_id)
             self.node_repository.close_connection()
 
             # select id inserted node
-            node_id = self.database_preparation.get_node_id(node_name, graph_id)
+            node_id = self.database_preparation.get_node_id(node_name, node_x_coord, node_y_coord, graph_id)
 
             # assert
             self.assertEqual(node_id_from_repository, node_id)
@@ -51,6 +53,8 @@ class TestNodeRepository(unittest.TestCase):
 
             # act
             node_name = 'T'
+            node_x_coord = 234
+            node_y_coord = 734
             graph_name = 'Gygy'
 
             # insert new graph
@@ -60,10 +64,10 @@ class TestNodeRepository(unittest.TestCase):
             graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # insert new node
-            self.database_preparation.insert_node(node_name, graph_id)
+            self.database_preparation.insert_node(node_name, node_x_coord, node_y_coord, graph_id)
 
             # get id of inserted node
-            inserted_node_id = self.database_preparation.get_node_id(node_name, graph_id)
+            inserted_node_id = self.database_preparation.get_node_id(node_name, node_x_coord, node_y_coord, graph_id)
 
             # get values of inserted node from node_repository
             node_values_from_repository = self.node_repository.get_node(inserted_node_id)
@@ -84,6 +88,8 @@ class TestNodeRepository(unittest.TestCase):
 
             # act
             node_name = 'R'
+            node_x_coord = 278
+            node_y_coord = 412
             graph_name = 'Tata'
 
             # insert new graph
@@ -93,14 +99,15 @@ class TestNodeRepository(unittest.TestCase):
             graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # insert new node
-            self.database_preparation.insert_node(node_name, graph_id)
+            self.database_preparation.insert_node(node_name, node_x_coord, node_y_coord, graph_id)
 
             # get nodes of graph from node repository
             node_values_from_node_repository = self.node_repository.get_graph_nodes(graph_id)
             self.node_repository.close_connection()
 
             # manually get nodes of graph
-            sql_syntax = f"SELECT graph.id, node.id , node.name "\
+            sql_syntax = f"SELECT node.id , node.name, node.node_x_coord AS node_x_coord, " \
+                         f"node.node_y_coord AS node_y_coord, graph.id "\
                          f"FROM node "\
                          f"JOIN graph "\
                          f"ON node.graph_id = graph.id "\
@@ -121,6 +128,8 @@ class TestNodeRepository(unittest.TestCase):
 
             # act
             node_name = 'R'
+            node_x_coord = 248
+            node_y_coord = 312
             graph_name = 'Haha'
 
             # insert new graph
@@ -130,21 +139,21 @@ class TestNodeRepository(unittest.TestCase):
             graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # insert new node
-            self.database_preparation.insert_node(node_name, graph_id)
+            self.database_preparation.insert_node(node_name, node_x_coord, node_y_coord, graph_id)
 
             # get id of inserted node
-            node_id = self.database_preparation.get_node_id(node_name, graph_id)
+            node_id = self.database_preparation.get_node_id(node_name, node_x_coord, node_y_coord, graph_id)
 
             # update name of new_node
             updated_node_name = 'E'
-            self.node_repository.update_node(node_id, updated_node_name, graph_id)
+            self.node_repository.update_node(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)
             self.node_repository.close_connection()
 
             # get updated values of new_node
             updated_node_values = self.database_preparation.get_node_values(node_id)
 
             # assert
-            self.assertEqual(updated_node_values, [(node_id, updated_node_name, graph_id)])
+            self.assertEqual(updated_node_values, [(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)])
         finally:
             self.test_database_connection.close()
 
@@ -156,6 +165,8 @@ class TestNodeRepository(unittest.TestCase):
             # act
             # insert new graph
             graph_name = 'Hart'
+            node_x_coord = 134
+            node_y_coord = 342
             self.database_preparation.insert_graph(graph_name)
 
             # get id of new graph
@@ -163,10 +174,10 @@ class TestNodeRepository(unittest.TestCase):
 
             # insert new node
             node_name = 'P'
-            self.database_preparation.insert_node(node_name, graph_id)
+            self.database_preparation.insert_node(node_name, node_x_coord, node_y_coord, graph_id)
 
             # get id of inserted node
-            node_id = self.database_preparation.get_node_id(node_name, graph_id)
+            node_id = self.database_preparation.get_node_id(node_name, node_x_coord, node_y_coord, graph_id)
 
             # delete new_node
             self.node_repository.delete_node(node_id)

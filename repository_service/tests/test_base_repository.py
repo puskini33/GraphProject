@@ -25,19 +25,20 @@ class PrepareDatabase(object):
         self.test_cursor.execute(sql_insert_graph)
         self.test_database_connection.commit()
 
-    def insert_node(self, node_name: str, graph_id: str):
-        sql_insert_node_start = f"INSERT OR IGNORE INTO node(graph_id, name) VALUES ('{graph_id}', '{node_name}');"
+    def insert_node(self, node_name: str, node_x_coord: int, node_y_coord: int, graph_id: int):
+        sql_insert_node_start = f"INSERT OR IGNORE INTO node (name, node_x_coord, node_y_coord, graph_id) " \
+                                f"VALUES ('{node_name}', '{node_x_coord}', '{node_y_coord}', '{graph_id}');"
         self.test_cursor.execute(sql_insert_node_start)
         self.test_database_connection.commit()
 
-    def insert_edge(self, edge_name: str, edge_cost: int, node_start_id: str,
-                    node_end_id: str, graph_id: str):
-        sql_insert_new_edge = f"INSERT INTO edge (name, cost, node_start_id, node_end_id, graph_id) " \
+    def insert_edge(self, edge_name: str, edge_cost: int, node_start_id: int,
+                    node_end_id: int, graph_id: int):
+        sql_insert_new_edge = f"INSERT INTO edge (name, cost, start_node_id, end_node_id, graph_id) " \
             f"VALUES ('{edge_name}', '{edge_cost}', '{node_start_id}', '{node_end_id}', '{graph_id}');"
         self.test_cursor.execute(sql_insert_new_edge)
         self.test_database_connection.commit()
 
-    def get_graph_id(self, graph_name: str) -> str:
+    def get_graph_id(self, graph_name: str) -> int:
         sql_select_syntax = f"SELECT graph.id FROM graph WHERE graph.name = '{graph_name}';"
         self.test_cursor.execute(sql_select_syntax)
         self.test_database_connection.commit()
@@ -49,23 +50,24 @@ class PrepareDatabase(object):
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()
 
-    def get_node_id(self, node_name: str, graph_id: str) -> str:
-        sql_get_node_start_name = f"SELECT node.id FROM node WHERE node.name = '{node_name}' " \
-                                  f"AND graph_id = '{graph_id}';"
+    def get_node_id(self, node_name: str, node_x_coord: int, node_y_coord: int, graph_id: int) -> int:
+        sql_get_node_start_name = f"SELECT node.id FROM node WHERE node.name = '{node_name}' AND " \
+                                  f"node.node_x_coord = '{node_x_coord}' AND node.node_y_coord = '{node_y_coord}' " \
+                                  f"AND node.graph_id = '{graph_id}';"
         self.test_cursor.execute(sql_get_node_start_name)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]
 
-    def get_node_values(self, inserted_node_id: str) -> list or tuple:
+    def get_node_values(self, inserted_node_id: int) -> list or tuple:
         sql_syntax = f"SELECT * FROM node WHERE node.id = '{inserted_node_id}';"
         self.test_cursor.execute(sql_syntax)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()
 
-    def get_edge_id(self, edge_name: str, edge_cost: int, node_start_id: str,
-                    node_end_id: str, graph_id: str) -> str:
+    def get_edge_id(self, edge_name: str, edge_cost: int, node_start_id: int,
+                    node_end_id: int, graph_id: int) -> int:
         sql_get_edge_id = f"SELECT id FROM edge WHERE name = '{edge_name}' AND cost = '{edge_cost}' AND " \
-            f"node_start_id = '{node_start_id}' AND node_end_id = '{node_end_id}' AND graph_id = '{graph_id}';"
+                          f"start_node_id = '{node_start_id}' AND end_node_id = '{node_end_id}' AND graph_id = '{graph_id}';"
         self.test_cursor.execute(sql_get_edge_id)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]

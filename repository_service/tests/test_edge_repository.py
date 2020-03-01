@@ -1,5 +1,5 @@
-from database_api.edge_repository import EdgeRepository
-from database_api.tests.test_base_repository import PrepareDatabase
+from repository_service.edge_repository import EdgeRepository
+from repository_service.tests.test_base_repository import PrepareDatabase
 from unittest import TestCase
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestEdgeRepository(TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\database_api\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
         self.edge_repository = EdgeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
@@ -34,14 +34,18 @@ class TestEdgeRepository(TestCase):
 
             # insert_graph 2 nodes
             node_start_name = 'L'
-            self.database_preparation.insert_node(node_start_name, graph_id)
+            start_node_x_coord = 123
+            start_node_y_coord = 234
+            self.database_preparation.insert_node(node_start_name, start_node_x_coord, start_node_y_coord, graph_id)
 
             node_end_name = 'G'
-            self.database_preparation.insert_node(node_end_name, graph_id)
+            end_node_x_coord = 323
+            end_node_y_coord = 298
+            self.database_preparation.insert_node(node_end_name, end_node_x_coord, end_node_y_coord, graph_id)
 
             # get id of nodes
-            node_start_id = self.database_preparation.get_node_id(node_start_name, graph_id)
-            node_end_id = self.database_preparation.get_node_id(node_end_name, graph_id)
+            node_start_id = self.database_preparation.get_node_id(node_start_name, start_node_x_coord, start_node_y_coord, graph_id)
+            node_end_id = self.database_preparation.get_node_id(node_end_name, end_node_x_coord, end_node_y_coord, graph_id)
 
             # insert_graph new_edge via edge_repository
             edge_name = 'LG'
@@ -73,14 +77,18 @@ class TestEdgeRepository(TestCase):
 
             # insert_graph 2 nodes
             node_start_name = 'K'
-            self.database_preparation.insert_node(node_start_name, graph_id)
+            node_start_x_coord = 345
+            node_start_y_coord = 291
+            self.database_preparation.insert_node(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
 
             node_end_name = 'A'
-            self.database_preparation.insert_node(node_end_name, graph_id)
+            node_end_x_coord = 345
+            node_end_y_coord = 291
+            self.database_preparation.insert_node(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # get id of nodes
-            node_start_id = self.database_preparation.get_node_id(node_start_name, graph_id)
-            node_end_id = self.database_preparation.get_node_id(node_end_name, graph_id)
+            node_start_id = self.database_preparation.get_node_id(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
+            node_end_id = self.database_preparation.get_node_id(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # insert new_edge
             edge_name = 'KA'
@@ -114,26 +122,32 @@ class TestEdgeRepository(TestCase):
 
             # insert_graph 2 nodes
             node_start_name = 'P'
-            self.database_preparation.insert_node(node_start_name, graph_id)
+            node_start_x_coord = 345
+            node_start_y_coord = 291
+            self.database_preparation.insert_node(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
 
             node_end_name = 'E'
-            self.database_preparation.insert_node(node_end_name, graph_id)
+            node_end_x_coord = 345
+            node_end_y_coord = 291
+            self.database_preparation.insert_node(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # get id of nodes
-            node_start_id = self.database_preparation.get_node_id(node_start_name, graph_id)
-            node_end_id = self.database_preparation.get_node_id(node_end_name, graph_id)
+            node_start_id = self.database_preparation.get_node_id(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
+            node_end_id = self.database_preparation.get_node_id(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # insert new edge
             edge_name = 'PE'
             edge_cost = 56
             self.database_preparation.insert_edge(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
 
+            # get edge_ id
+            edge_id = self.database_preparation.get_edge_id(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
             # get edges of nodes from edge_repository
             node_edge_values = self.edge_repository.get_node_edges(node_start_id)[0]
             self.edge_repository.close_connection()
 
             # assert
-            self.assertEqual(node_edge_values, (node_start_name, edge_name))
+            self.assertEqual(node_edge_values, (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id))
         finally:
             self.test_database_connection.close()
 
@@ -152,14 +166,18 @@ class TestEdgeRepository(TestCase):
 
             # insert_graph 2 nodes
             node_start_name = 'V'
-            self.database_preparation.insert_node(node_start_name, graph_id)
+            node_start_x_coord = 345
+            node_start_y_coord = 291
+            self.database_preparation.insert_node(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
 
             node_end_name = 'S'
-            self.database_preparation.insert_node(node_end_name, graph_id)
+            node_end_x_coord = 345
+            node_end_y_coord = 291
+            self.database_preparation.insert_node(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # get id of nodes
-            node_start_id = self.database_preparation.get_node_id(node_start_name, graph_id)
-            node_end_id = self.database_preparation.get_node_id(node_end_name, graph_id)
+            node_start_id = self.database_preparation.get_node_id(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
+            node_end_id = self.database_preparation.get_node_id(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # insert_graph new edge
             edge_name = 'VS'
@@ -176,7 +194,7 @@ class TestEdgeRepository(TestCase):
 
             # get updated_cost of edge
             sql_get_edge_updated_cost = f"SELECT cost FROM edge WHERE id = '{edge_id}' AND name = '{edge_name}' AND " \
-                f"node_start_id = '{node_start_id}' AND node_end_id = '{node_end_id}' AND graph_id = '{graph_id}';"
+                f"start_node_id = '{node_start_id}' AND end_node_id = '{node_end_id}' AND graph_id = '{graph_id}';"
             self.test_cursor.execute(sql_get_edge_updated_cost)
             self.test_database_connection.commit()
             updated_edge_cost = self.test_cursor.fetchall()[0][0]
@@ -201,14 +219,18 @@ class TestEdgeRepository(TestCase):
 
             # insert_graph 2 nodes
             node_start_name = 'G'
-            self.database_preparation.insert_node(node_start_name, graph_id)
+            node_start_x_coord = 345
+            node_start_y_coord = 291
+            self.database_preparation.insert_node(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
 
             node_end_name = 'M'
-            self.database_preparation.insert_node(node_end_name, graph_id)
+            node_end_x_coord = 345
+            node_end_y_coord = 291
+            self.database_preparation.insert_node(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # get id of nodes
-            node_start_id = self.database_preparation.get_node_id(node_start_name, graph_id)
-            node_end_id = self.database_preparation.get_node_id(node_end_name, graph_id)
+            node_start_id = self.database_preparation.get_node_id(node_start_name, node_start_x_coord, node_start_y_coord, graph_id)
+            node_end_id = self.database_preparation.get_node_id(node_end_name, node_end_x_coord, node_end_y_coord, graph_id)
 
             # insert new edge
             edge_name = 'GM'
@@ -224,7 +246,7 @@ class TestEdgeRepository(TestCase):
 
             # manually check if edge is deleted
             sql_statement_edge_id = f"SELECT id FROM edge WHERE name = '{edge_name}' AND cost = '{edge_cost}' AND " \
-                f"node_start_id = '{node_start_id}' AND node_end_id = '{node_end_id}' AND graph_id = '{graph_id}';"
+                                    f"start_node_id = '{node_start_id}' AND end_node_id = '{node_end_id}' AND graph_id = '{graph_id}';"
             self.test_cursor.execute(sql_statement_edge_id)
             self.test_database_connection.commit()
             deleted_edge_id = self.test_cursor.fetchall()
