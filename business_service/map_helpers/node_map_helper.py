@@ -1,22 +1,22 @@
 from models.node_model import NodeModel
+from typing import List
 
 
 class NodeMapHelper(object):
     @staticmethod
     def db_entity_to_node_model(db_entity: list) -> NodeModel:
         node_model = NodeModel()
-        node_model.node_id = db_entity[0][0]
-        node_model.node_name = db_entity[0][1]
-        node_model.graph_id = db_entity[0][2]
+        node_model.node_id = db_entity[0]
+        node_model.node_name = db_entity[1]
+        node_model.x_coord = db_entity[2]
+        node_model.y_coord = db_entity[3]
+        node_model.graph_id = db_entity[4]
         return node_model
 
     @staticmethod
-    def db_entities_to_node_models(db_entity: list) -> list:
-        list_node_models = []
-        for node_values in db_entity:
-            node_model = NodeModel()
-            node_model.node_id = node_values[0]
-            node_model.node_name = node_values[1]
-            node_model.graph_id = node_values[2]
+    def db_entities_to_node_models(db_entities: List[List]) -> List[NodeModel]:
+        list_node_models: List[NodeModel] = []
+        for list_of_node_values in db_entities:
+            node_model: NodeModel = NodeMapHelper.db_entity_to_node_model(list_of_node_values)
             list_node_models.append(node_model)
         return list_node_models

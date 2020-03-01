@@ -1,4 +1,4 @@
-from database_api.edge_repository import EdgeRepository
+from repository_service.edge_repository import EdgeRepository
 from business_service.map_helpers.edge_map_helper import EdgeMapHelper
 from models.edge_model import EdgeModel
 

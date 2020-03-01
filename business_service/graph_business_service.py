@@ -1,4 +1,4 @@
-from database_api.graph_repository import GraphRepository
+from repository_service.graph_repository import GraphRepository
 from business_service.map_helpers.graph_map_helper import GraphMapHelper
 from models.graph_model import GraphModel
 
