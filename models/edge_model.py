@@ -8,6 +8,7 @@ class EdgeModel(object):
         self.start_node_id = start_node_id
         self.end_node_id = end_node_id
         self.graph_id = graph_id
+        self.list_of_nodes = []
 
     def __repr__(self) -> str:
         return f'Edge Id: {self.edge_id}, Edge Name: {self.edge_name}, Edge Cost: {self.edge_cost}, ' \

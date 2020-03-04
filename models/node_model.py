@@ -1,4 +1,5 @@
 from models.edge_model import EdgeModel
+from typing import List
 
 
 class NodeModel(object):
