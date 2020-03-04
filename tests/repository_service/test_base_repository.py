@@ -44,7 +44,7 @@ class PrepareDatabase(object):
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]
 
-    def get_graph_values(self, graph_id: str) -> list or tuple:
+    def get_graph_values(self, graph_id: int) -> list or tuple:
         sql_select = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
         self.test_cursor.execute(sql_select)
         self.test_database_connection.commit()

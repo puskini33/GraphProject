@@ -1,5 +1,5 @@
 from repository_service.graph_repository import GraphRepository
-from repository_service.tests.test_base_repository import PrepareDatabase
+from tests.repository_service.test_base_repository import PrepareDatabase
 import unittest
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestGraphRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
         self.graph_repository = GraphRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
@@ -37,7 +37,7 @@ class TestGraphRepository(unittest.TestCase):
         finally:
             self.test_database_connection.close()
 
-    """def test_get_graph(self):
+    def test_get_graph(self):
         try:
             # prepare
             self.delete_values_from_database()
@@ -49,14 +49,14 @@ class TestGraphRepository(unittest.TestCase):
             self.database_preparation.insert_graph(graph_name)
 
             # get id of graph
-            graph_id = self.database_preparation.get_graph_id(graph_name)
+            latest_graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # get graph name from graph_repository
-            graph_values_from_graph_repository = self.graph_repository.get_graph(graph_id)
+            graph_values_from_graph_repository = self.graph_repository.get_graph(latest_graph_id)
             self.graph_repository.close_connection()
 
             # manually get graph values
-            graph_values = self.database_preparation.get_graph_values(graph_id)
+            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
 
             # assert
             self.assertEqual(graph_values, graph_values_from_graph_repository)
@@ -74,15 +74,15 @@ class TestGraphRepository(unittest.TestCase):
             self.database_preparation.insert_graph(graph_name)
 
             # get id of graph
-            graph_id = self.database_preparation.get_graph_id(graph_name)
+            latest_graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # update graph
             graph_updated_name = 'Updated Name'
-            self.graph_repository.update_graph(graph_id, graph_updated_name)
+            self.graph_repository.update_graph(latest_graph_id, graph_updated_name)
             self.graph_repository.close_connection()
 
             # select updated graph
-            sql_select = f"SELECT graph.name FROM graph WHERE graph.id = '{graph_id}';"
+            sql_select = f"SELECT graph.name FROM graph WHERE graph.id = '{latest_graph_id}';"
             self.test_cursor.execute(sql_select)
             self.test_database_connection.commit()
             graph_name = self.test_cursor.fetchall()
@@ -103,16 +103,16 @@ class TestGraphRepository(unittest.TestCase):
             self.database_preparation.insert_graph(graph_name)
 
             # get id of graph
-            graph_id = self.database_preparation.get_graph_id(graph_name)
+            latest_graph_id = self.database_preparation.get_graph_id(graph_name)
 
             # delete new_graph
-            self.graph_repository.delete_graph(graph_id)
+            self.graph_repository.delete_graph(latest_graph_id)
             self.graph_repository.close_connection()
 
             # select graph values
-            graph_values = self.database_preparation.get_graph_values(graph_id)
+            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
 
             # assert
             self.assertEqual(graph_values, [])
         finally:
-            self.test_database_connection.close()"""
+            self.test_database_connection.close()

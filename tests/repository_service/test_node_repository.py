@@ -1,5 +1,5 @@
 from repository_service.node_repository import NodeRepository
-from repository_service.tests.test_base_repository import PrepareDatabase
+from tests.repository_service.test_base_repository import PrepareDatabase
 import unittest
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestNodeRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
         self.node_repository = NodeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()

@@ -1,5 +1,5 @@
 from repository_service.edge_repository import EdgeRepository
-from repository_service.tests.test_base_repository import PrepareDatabase
+from tests.repository_service.test_base_repository import PrepareDatabase
 from unittest import TestCase
 import sqlite3
 
@@ -7,7 +7,7 @@ import sqlite3
 class TestEdgeRepository(TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\repository_service\\tests\\test_database.db'
+        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
         self.edge_repository = EdgeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
