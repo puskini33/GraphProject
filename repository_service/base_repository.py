@@ -1,8 +1,9 @@
-from repository_service.config_database import ConfigDatabase
+from repository_service.config.config_database import ConfigDatabase
 import sqlite3
+from abc import ABC
 
 
-class BaseRepository(object):
+class BaseRepository(ABC):
 
     def __init__(self, path: str = None):
         if path:

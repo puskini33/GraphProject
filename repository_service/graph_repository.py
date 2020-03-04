@@ -1,7 +1,8 @@
+from repository_service.contracts.graph_repository_base import GraphRepositoryBase
 from repository_service.base_repository import BaseRepository
 
 
-class GraphRepository(BaseRepository):
+class GraphRepository(GraphRepositoryBase, BaseRepository):
 
     def __init__(self, path: str = None):
         super().__init__(path)
