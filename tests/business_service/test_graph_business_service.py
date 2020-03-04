@@ -9,32 +9,27 @@ class TestGraphBusinessService(unittest.TestCase):
 
     def test_insert_graph(self):
         # prepare
+        graph_repository_mock = GraphRepositoryMock()
         graph_name = 'GraphName1'
         graph_model = GraphModel()
         graph_model.graph_name = graph_name
 
-        self.graph_repository = GraphRepositoryMock()
-        graph_business_service = GraphBusinessService(self.graph_repository)
+        graph_business_service = GraphBusinessService(graph_repository_mock)
 
         # act
-        business_service_graph_id = graph_business_service.insert_graph(graph_model)
-
-        graph_id = 0
-        graph_model.graph_id = graph_id
+        result_graph_model = graph_business_service.insert_graph(graph_model)
 
         # assert
-        self.assertEqual(business_service_graph_id, graph_model)
 
-    def test_get_graph_model(self):
-        # prepare
-        graph_id = 0
+        self.assertEqual(result_graph_model.graph_id, graph_repository_mock.inserted_graph_id)
 
+        # assert it is the same object/ instance of class
+        self.assertEqual(result_graph_model, graph_model)
 
-        self.graph_repository = GraphRepositoryMock()
-        graph_business_service = GraphBusinessService(self.graph_repository)
-        # act
+        # assert name of object is same
+        self.assertEqual(result_graph_model.graph_name, graph_name)
 
-        # assert
+    
 
 
 if __name__ == '__main__':
