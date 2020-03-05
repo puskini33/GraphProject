@@ -17,7 +17,6 @@ class EdgeMapHelper(object):
     def db_entities_to_node_models(db_entity: list) -> list:
         list_edge_models = []
         for edge_values in db_entity:
-            edge_model = EdgeModel()
-            EdgeMapHelper.db_entity_to_edge_model(edge_values)
+            edge_model = EdgeMapHelper.db_entity_to_edge_model(edge_values)
             list_edge_models.append(edge_model)
         return list_edge_models

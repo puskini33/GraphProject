@@ -2,12 +2,11 @@ from business_service.node_business_service import NodeBusinessService
 from tests.business_service.repository_mock.node_repository_mock import NodeRepositoryMock
 from models.node_model import NodeModel
 import unittest
-import pytest
 
 
 class TestNodeBusinessService(unittest.TestCase):
 
-    def verify_properties_of_first_node_model(self, node_model, node_repository_mock):
+    def verify_properties_of_first_node_model(self, node_model: NodeModel, node_repository_mock: NodeRepositoryMock):
         self.assertEqual(node_model.node_id, node_repository_mock.first_node_id)
         self.assertEqual(node_model.node_name, node_repository_mock.first_node_name)
         self.assertEqual(node_model.x_coord, node_repository_mock.first_x_coord)
