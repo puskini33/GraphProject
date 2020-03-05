@@ -91,4 +91,4 @@ class GraphView(Frame):
         self.graph_app_service.save_graph_model(self.graph_model)
 
     def get_graph(self):
-        pass
+        self.graph_app_service.get_graph_model(graph_id=1)

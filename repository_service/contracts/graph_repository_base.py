@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 
-class GraphRepositoryBase(object):
+class GraphRepositoryBase(ABC):
 
     @abstractmethod
     def insert_graph(self, graph_name: str) -> int:

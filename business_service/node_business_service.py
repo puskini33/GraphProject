@@ -1,4 +1,4 @@
-from repository_service.node_repository import NodeRepository
+from repository_service.contracts.node_repository_base import NodeRepositoryBase
 from business_service.map_helpers.node_map_helper import NodeMapHelper
 from models.node_model import NodeModel
 from typing import List
@@ -6,7 +6,7 @@ from typing import List
 
 class NodeBusinessService(object):
 
-    def __init__(self, in_node_repository: NodeRepository):
+    def __init__(self, in_node_repository: NodeRepositoryBase):
         self.node_repository = in_node_repository
 
     def insert_node(self, node_model: NodeModel) -> NodeModel:

@@ -1,7 +1,8 @@
 from repository_service.base_repository import BaseRepository
+from repository_service.contracts.node_repository_base import NodeRepositoryBase
 
 
-class NodeRepository(BaseRepository):
+class NodeRepository(BaseRepository, NodeRepositoryBase):
 
     def __init__(self, path: str = None):
         super().__init__(path)

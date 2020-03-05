@@ -3,7 +3,7 @@ from business_service.node_business_service import NodeBusinessService
 from models.graph_model import GraphModel
 
 
-class GraphApplication(object):
+class GraphApplicationService(object):
 
     def __init__(self, in_graph_business_service: GraphBusinessService, in_node_business_service: NodeBusinessService):
         self.graph_business_service = in_graph_business_service
