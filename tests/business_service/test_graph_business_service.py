@@ -1,4 +1,4 @@
-from tests.business_service.graph_repository_mock.graph_repository_mock import GraphRepositoryMock
+from tests.business_service.repository_mock.graph_repository_mock import GraphRepositoryMock
 from models.graph_model import GraphModel
 import unittest
 import pytest
