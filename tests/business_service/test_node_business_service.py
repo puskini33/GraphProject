@@ -86,11 +86,15 @@ class TestNodeBusinessService(unittest.TestCase):
         node_business_service = NodeBusinessService(node_repository_mock)
         node_model = NodeModel()
 
+        updated_node_name = 'UpdatedNodeName'
+        updated_x_coord = 130
+        updated_y_coord = 100
+
         node_model.node_id = node_repository_mock.first_node_id
-        node_model.node_name = node_repository_mock.node_updated_name
+        node_model.node_name = updated_node_name
         node_model.graph_id = node_repository_mock.graph_id
-        node_model.x_coord = node_repository_mock.updated_x_coord
-        node_model.y_coord = node_repository_mock.updated_y_coord
+        node_model.x_coord = updated_x_coord
+        node_model.y_coord = updated_y_coord
 
         # act
         result_node_model = node_business_service.update_node(node_model)
@@ -103,12 +107,12 @@ class TestNodeBusinessService(unittest.TestCase):
         self.assertEqual(result_node_model.node_id, node_repository_mock.first_node_id)
 
         # assert name is updated
-        self.assertEqual(result_node_model.node_name, node_repository_mock.node_updated_name)
+        self.assertEqual(result_node_model.node_name, updated_node_name)
 
         # assert x_coord are updated
-        self.assertEqual(result_node_model.x_coord, node_repository_mock.updated_x_coord)
+        self.assertEqual(result_node_model.x_coord, updated_x_coord)
 
         # assert y coord are updated
-        self.assertEqual(result_node_model.y_coord, node_repository_mock.updated_y_coord)
+        self.assertEqual(result_node_model.y_coord, updated_y_coord)
 
 

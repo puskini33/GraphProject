@@ -6,11 +6,8 @@ class NodeRepositoryMock(NodeRepositoryBase):
     def __init__(self):
         self.first_node_id = 16
         self.first_node_name = 'TestNodeName0'
-        self.node_updated_name = 'UpdatedNodeName'
         self.first_x_coord = 100
-        self.updated_x_coord = 130
         self.first_y_coord = 87
-        self.updated_y_coord = 100
         self.graph_id = 1
         self.second_node_id = 17
         self.second_node_name = 'TestNodeName1'
