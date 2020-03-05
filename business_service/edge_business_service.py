@@ -1,11 +1,11 @@
-from repository_service.edge_repository import EdgeRepository
+from repository_service.contracts.edge_repository_base import EdgeRepositoryBase
 from business_service.map_helpers.edge_map_helper import EdgeMapHelper
 from models.edge_model import EdgeModel
 
 
 class EdgeBusinessService(object):
 
-    def __init__(self, in_edge_repository: EdgeRepository):
+    def __init__(self, in_edge_repository: EdgeRepositoryBase):
         self.edge_repository = in_edge_repository
 
     def insert_edge(self, edge_model: EdgeModel) -> EdgeModel:
@@ -16,7 +16,7 @@ class EdgeBusinessService(object):
 
     def get_edge_model(self, edge_id: int) -> EdgeModel:
         list_values_edge = self.edge_repository.get_edge_values(edge_id)
-        return EdgeMapHelper.db_entity_to_edge_model(list_values_edge)
+        return EdgeMapHelper.db_entity_to_edge_model(list_values_edge[0])
 
     def get_edge_models(self, node_id: int) -> list:
         list_values_edges = self.edge_repository.get_node_edges(node_id)

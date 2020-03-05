@@ -1,7 +1,9 @@
 from repository_service.base_repository import BaseRepository
+from repository_service.contracts.edge_repository_base import EdgeRepositoryBase
+from typing import List, Tuple
 
 
-class EdgeRepository(BaseRepository):
+class EdgeRepository(BaseRepository, EdgeRepositoryBase):
 
     def __init__(self, path: str = None):
         super().__init__(path)
@@ -13,12 +15,12 @@ class EdgeRepository(BaseRepository):
         self.execute_query("SELECT last_insert_rowid();")
         return self.cursor.fetchall()[0][0]
 
-    def get_edge_values(self, edge_id: int) -> list or tuple:
+    def get_edge_values(self, edge_id: int) -> List[Tuple] or List[List]:
         edge_values = f"SELECT * FROM edge WHERE edge.id = '{edge_id}';"
         self.execute_query(edge_values)
         return self.cursor.fetchall()
 
-    def get_node_edges(self, node_id: int) -> list or tuple:
+    def get_node_edges(self, node_id: int) -> List[Tuple] or List[List]:
         node_edges_values = f"SELECT edge.id, edge.name, edge.cost, edge.start_node_id, edge.end_node_id, edge.graph_id " \
                             f"FROM node " \
                             f"JOIN graph " \

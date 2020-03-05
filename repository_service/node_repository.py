@@ -1,5 +1,6 @@
 from repository_service.base_repository import BaseRepository
 from repository_service.contracts.node_repository_base import NodeRepositoryBase
+from typing import List, Tuple
 
 
 class NodeRepository(BaseRepository, NodeRepositoryBase):
@@ -14,12 +15,12 @@ class NodeRepository(BaseRepository, NodeRepositoryBase):
         self.execute_query("SELECT last_insert_rowid();")
         return self.cursor.fetchall()[0][0]
 
-    def get_node(self, node_id: int) -> list:
+    def get_node(self, node_id: int) -> List[Tuple]:
         node_values = f"SELECT * FROM node WHERE node.id = '{node_id}';"
         self.execute_query(node_values)
         return self.cursor.fetchall()
 
-    def get_graph_nodes(self, graph_id: int) -> list:
+    def get_graph_nodes(self, graph_id: int) -> List[Tuple]:
         graph_nodes = f"SELECT node.id AS node_id, node.name AS node_name, node.node_x_coord AS node_x_coord, " \
                       f"node.node_y_coord AS node_y_coord, graph.id AS graph_id "\
                       f"FROM node "\
