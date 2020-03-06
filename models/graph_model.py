@@ -9,5 +9,5 @@ class GraphModel(object):
         self.graph_name = graph_name
         self.list_of_nodes: List[NodeModel] = []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Graph Id: {self.graph_id} , Graph Name: {self.graph_name}'

@@ -9,11 +9,11 @@ class EdgeRepositoryBase(ABC):
         pass
 
     @abstractmethod
-    def get_edge_values(self, edge_id: int) -> List[Tuple] or List[List]:
+    def get_edge_values(self, edge_id: int) -> List[Tuple]:
         pass
 
     @abstractmethod
-    def get_node_edges(self, node_id: int) -> List[Tuple] or List[List]:
+    def get_node_edges(self, node_id: int) -> List[Tuple]:
         pass
 
     @abstractmethod

@@ -1,5 +1,6 @@
 from repository_service.contracts.graph_repository_base import GraphRepositoryBase
 from repository_service.base_repository import BaseRepository
+from typing import List, Tuple
 
 
 class GraphRepository(GraphRepositoryBase, BaseRepository):
@@ -14,7 +15,7 @@ class GraphRepository(GraphRepositoryBase, BaseRepository):
         self.execute_query("SELECT last_insert_rowid();")
         return self.cursor.fetchall()[0][0]
 
-    def get_graph(self, graph_id: int) -> list or tuple:
+    def get_graph(self, graph_id: int) -> List[Tuple]:
         certain_graph = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
         self.execute_query(certain_graph)
         return self.cursor.fetchall()

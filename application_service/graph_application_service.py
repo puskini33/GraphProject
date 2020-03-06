@@ -18,7 +18,7 @@ class GraphApplicationService(object):
                     node_model.graph_id = graph_model.graph_id
                     self.node_business_service.insert_node(node_model)
 
-    def get_graph_model(self, graph_id: int):
+    def get_graph_model(self, graph_id: int) -> GraphModel:
         graph_model = self.graph_business_service.get_graph_model(graph_id)
         graph_nodes = self.node_business_service.get_node_models(graph_id)
         graph_model.list_of_nodes = graph_nodes

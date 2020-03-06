@@ -1,4 +1,5 @@
 from repository_service.contracts.graph_repository_base import GraphRepositoryBase
+from typing import List, Tuple
 
 
 class GraphRepositoryMock(GraphRepositoryBase):
@@ -11,11 +12,11 @@ class GraphRepositoryMock(GraphRepositoryBase):
     def insert_graph(self, graph_name: str) -> int:
         return self.mock_graph_id
 
-    def get_graph(self, graph_id: int) -> list or tuple:
+    def get_graph(self, graph_id: int) -> List[Tuple]:
         return [(self.mock_graph_id, self.mock_graph_name)]
 
     def update_graph(self, graph_id: int, graph_name: str):
         return
 
     def delete_graph(self, graph_id: int):
-        return
+        pass

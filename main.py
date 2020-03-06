@@ -1,7 +1,7 @@
 from tkinter import *
 from view.graph_view import GraphView
 from models.graph_model import GraphModel
-from application_service.graph_application_service import GraphApplication
+from application_service.graph_application_service import GraphApplicationService
 from business_service.graph_business_service import GraphBusinessService
 from business_service.node_business_service import NodeBusinessService
 from repository_service.graph_repository import GraphRepository
@@ -12,6 +12,7 @@ def main():
     window = Tk()
     window.geometry("700x700")
     graph_repository = GraphRepository()
+    vrify = graph_repository.get_graph(1)
     node_repository = NodeRepository()
     graph_business_service = GraphBusinessService(graph_repository)
     node_business_service = NodeBusinessService(node_repository)

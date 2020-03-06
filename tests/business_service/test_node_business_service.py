@@ -113,5 +113,3 @@ class TestNodeBusinessService(unittest.TestCase):
 
         # assert y coord are updated
         self.assertEqual(result_node_model.y_coord, updated_y_coord)
-
-

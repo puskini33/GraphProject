@@ -1,13 +1,13 @@
 from models.graph_model import GraphModel
 from models.node_model import NodeModel
 from models.edge_model import EdgeModel
-from application_service.graph_application_service import GraphApplication
+from application_service.graph_application_service import GraphApplicationService
 from tkinter import *
 
 
 class GraphView(Frame):
 
-    def __init__(self, window, graph_model: GraphModel, graph_app_service: GraphApplication):
+    def __init__(self, window, graph_model: GraphModel, graph_app_service: GraphApplicationService):
         self.window = window
         self.canvas = Canvas(self.window, width=700, height=700, bg='white')
         self.graph_model = graph_model

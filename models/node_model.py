@@ -12,7 +12,7 @@ class NodeModel(object):
         self.y_coord = 0
         self.list_of_edges: List[EdgeModel] = []
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'[Node Id: {self.node_id}, Node Name: {self.node_name}, X Coord: {self.x_coord} ' \
                f'Y Coord: {self.y_coord}, Graph Id: {self.graph_id}]'
 

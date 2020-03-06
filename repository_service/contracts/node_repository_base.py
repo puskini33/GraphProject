@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List, Tuple
 
 
 class NodeRepositoryBase(ABC):
@@ -8,11 +9,11 @@ class NodeRepositoryBase(ABC):
         pass
 
     @abstractmethod
-    def get_node(self, node_id: int) -> list:
+    def get_node(self, node_id: int) -> List[Tuple]:
         pass
 
     @abstractmethod
-    def get_graph_nodes(self, graph_id: int) -> list:
+    def get_graph_nodes(self, graph_id: int) -> List[Tuple]:
         pass
 
     @abstractmethod

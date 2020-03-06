@@ -1,10 +1,10 @@
 from models.node_model import NodeModel
-from typing import List
+from typing import List, Tuple
 
 
 class NodeMapHelper(object):
     @staticmethod
-    def db_entity_to_node_model(db_entity: list) -> NodeModel:
+    def db_entity_to_node_model(db_entity: tuple) -> NodeModel:
         node_model = NodeModel()
         node_model.node_id = db_entity[0]
         node_model.node_name = db_entity[1]
@@ -14,7 +14,7 @@ class NodeMapHelper(object):
         return node_model
 
     @staticmethod
-    def db_entities_to_node_models(db_entities: List[List]) -> List[NodeModel]:
+    def db_entities_to_node_models(db_entities: List[Tuple]) -> List[NodeModel]:
         list_node_models: List[NodeModel] = []
         for list_of_node_values in db_entities:
             node_model: NodeModel = NodeMapHelper.db_entity_to_node_model(list_of_node_values)

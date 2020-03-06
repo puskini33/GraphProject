@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List, Tuple
 
 
 class GraphRepositoryBase(ABC):
@@ -8,7 +9,7 @@ class GraphRepositoryBase(ABC):
         pass
 
     @abstractmethod
-    def get_graph(self, graph_id: int) -> list or tuple:
+    def get_graph(self, graph_id: int) -> List[Tuple]:
         pass
 
     @abstractmethod
