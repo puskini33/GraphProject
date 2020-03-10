@@ -1,12 +1,14 @@
-from repository_service.contracts.graph_repository_base import GraphRepositoryBase
+from contracts.repository_service.graph_repository_base import GraphRepositoryBase
 from business_service.map_helpers.graph_map_helper import GraphMapHelper
+from contracts.business_service.graph_business_service_base import GraphBusinessServiceBase
 from models.graph_model import GraphModel
 
 
-class GraphBusinessService(object):
+class GraphBusinessService(GraphBusinessServiceBase):
 
     def __init__(self, in_graph_repository_base: GraphRepositoryBase):
         self.graph_repository = in_graph_repository_base
+        super().__init__()
 
     def insert_graph(self, graph_model: GraphModel) -> GraphModel:
         graph_id = self.graph_repository.insert_graph(graph_model.graph_name)

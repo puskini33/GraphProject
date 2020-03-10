@@ -13,8 +13,8 @@ class NodeModel(object):
         self.list_of_edges: List[EdgeModel] = []
 
     def __repr__(self) -> str:
-        return f'[Node Id: {self.node_id}, Node Name: {self.node_name}, X Coord: {self.x_coord} ' \
-               f'Y Coord: {self.y_coord}, Graph Id: {self.graph_id}]'
+        return f'Node Id: {self.node_id}, Node Name: {self.node_name}, X Coord: {self.x_coord} ' \
+               f'Y Coord: {self.y_coord}, Graph Id: {self.graph_id}'
 
     def set_coord(self, x: int, y: int):
         self.x_coord = x

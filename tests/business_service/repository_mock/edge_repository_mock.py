@@ -1,4 +1,4 @@
-from repository_service.contracts.edge_repository_base import EdgeRepositoryBase
+from contracts.repository_service.edge_repository_base import EdgeRepositoryBase
 from typing import List, Tuple
 
 

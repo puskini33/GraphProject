@@ -6,23 +6,30 @@ from business_service.graph_business_service import GraphBusinessService
 from business_service.node_business_service import NodeBusinessService
 from repository_service.graph_repository import GraphRepository
 from repository_service.node_repository import NodeRepository
+import types
 
 
 def main():
     window = Tk()
     window.geometry("700x700")
     graph_repository = GraphRepository()
-    vrify = graph_repository.get_graph(1)
     node_repository = NodeRepository()
     graph_business_service = GraphBusinessService(graph_repository)
     node_business_service = NodeBusinessService(node_repository)
     trial_graph_model = GraphModel(graph_name='Elena')
-    trial_graph_app_service = GraphApplication(graph_business_service, node_business_service)
+    trial_graph_app_service = GraphApplicationService(graph_business_service, node_business_service)
     graph_model_from_db = trial_graph_app_service.get_graph_model(1)
     graph= GraphView(window, graph_model_from_db, trial_graph_app_service)
-
+    node_business_service.get_node_models(1)
     window.mainloop()
+
 
 
 if __name__ == '__main__':
     main()
+
+
+
+
+
+

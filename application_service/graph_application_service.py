@@ -1,11 +1,11 @@
-from business_service.graph_business_service import GraphBusinessService
-from business_service.node_business_service import NodeBusinessService
+from contracts.business_service.graph_business_service_base import GraphBusinessServiceBase
+from contracts.business_service.node_business_service_base import NodeBusinessServiceBase
 from models.graph_model import GraphModel
 
 
 class GraphApplicationService(object):
 
-    def __init__(self, in_graph_business_service: GraphBusinessService, in_node_business_service: NodeBusinessService):
+    def __init__(self, in_graph_business_service: GraphBusinessServiceBase, in_node_business_service: NodeBusinessServiceBase):
         self.graph_business_service = in_graph_business_service
         self.node_business_service = in_node_business_service
 

@@ -1,4 +1,4 @@
-from repository_service.contracts.graph_repository_base import GraphRepositoryBase
+from contracts.repository_service.graph_repository_base import GraphRepositoryBase
 from typing import List, Tuple
 
 

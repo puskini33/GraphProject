@@ -1,5 +1,5 @@
 from repository_service.base_repository import BaseRepository
-from repository_service.contracts.node_repository_base import NodeRepositoryBase
+from contracts.repository_service.node_repository_base import NodeRepositoryBase
 from typing import List, Tuple
 
 

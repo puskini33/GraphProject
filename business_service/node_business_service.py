@@ -1,13 +1,15 @@
-from repository_service.contracts.node_repository_base import NodeRepositoryBase
+from contracts.repository_service.node_repository_base import NodeRepositoryBase
 from business_service.map_helpers.node_map_helper import NodeMapHelper
 from models.node_model import NodeModel
+from contracts.business_service.node_business_service_base import NodeBusinessServiceBase
 from typing import List
 
 
-class NodeBusinessService(object):
+class NodeBusinessService(NodeBusinessServiceBase):
 
     def __init__(self, in_node_repository: NodeRepositoryBase):
         self.node_repository = in_node_repository
+        super().__init__()
 
     def insert_node(self, node_model: NodeModel) -> NodeModel:
         node_id = self.node_repository.insert_node(node_model.node_name, node_model.x_coord,
