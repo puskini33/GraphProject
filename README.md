@@ -10,3 +10,10 @@ Short Description of Technologies
   * UI using Tkinter
   * Testing with Unitesting
   * Database: SQLite, sqlite3 -DB-API 2.0
+
+Application Architecture 
+- inspired from https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+I used a 3-layered architecture for separating of concerns and for easy testing.
+
+On the UI part, I will use the MVC pattern to separate tkinter code from business code.
