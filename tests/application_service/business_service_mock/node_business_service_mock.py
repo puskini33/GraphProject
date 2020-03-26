@@ -17,6 +17,7 @@ class NodeBusinessServiceMock(NodeBusinessServiceBase):
     def get_node_models(self, graph_id: int) -> List[NodeModel]:
         node_model = NodeModel()
         node_model.node_id = self.node_id
+        node_model.graph_id = graph_id
         return [node_model]
 
     def update_node(self, node_model: NodeModel) -> NodeModel:

@@ -16,9 +16,9 @@ CREATE TABLE if not exists edge (
        id integer primary key, 
 	name text,
 	cost integer, 
-	start_node_id integer,
-	end_node_id integer,
-	graph_id integer,
+	start_node_id integer NOT NULL,
+	end_node_id integer NOT NULL,
+	graph_id integer NOT NULL,
 	FOREIGN KEY(graph_id) REFERENCES graph(id),
 	FOREIGN KEY(start_node_id) REFERENCES node(id),
 	FOREIGN KEY(end_node_id) REFERENCES node(id));

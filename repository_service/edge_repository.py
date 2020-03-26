@@ -26,7 +26,7 @@ class EdgeRepository(BaseRepository, EdgeRepositoryBase):
                             f"JOIN graph " \
                             f"ON node.graph_id = graph.id " \
                             f"JOIN edge " \
-                            f"ON edge.start_node_id = node.id " \
+                            f"ON edge.start_node_id = node.id OR edge.end_node_id = node.id " \
                             f"WHERE node.id = '{node_id}';"
         self.execute_query(node_edges_values)
         return self.cursor.fetchall()
