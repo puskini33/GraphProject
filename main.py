@@ -28,14 +28,11 @@ def main():
                                                       edge_business_service)
 
     # saved_graph_model = trial_graph_app_service.save_graph_model(unsaved_graph_model)
-    graph_model = trial_graph_app_service.get_graph_model(55)
+    saved_graph_model = trial_graph_app_service.get_graph_model(90)
 
-    graph_view = GraphView(window, graph_model, trial_graph_app_service)
+    graph_view = GraphView(window, saved_graph_model, trial_graph_app_service)
     window.mainloop()
 
-    edge_model = EdgeModel()
-    node_model = NodeModel()
-    edge_model.start_node = node_model
 
 if __name__ == '__main__':
     main()

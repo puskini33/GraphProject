@@ -11,8 +11,8 @@ class EdgeModel(object):
         self.start_node_id = start_node_id
         self.end_node_id = end_node_id
         self.graph_id = graph_id
-        self.start_node: models.node_model.NodeModel = None  # TODO: Solve here
-        self.end_node = None
+        self.start_node: models.node_model.NodeModel or None = None
+        self.end_node: models.node_model.NodeModel or None = None
 
     def __repr__(self) -> str:
         return f'Edge Id: {self.edge_id}, Edge Name: {self.edge_name}, Edge Cost: {self.edge_cost}, ' \
