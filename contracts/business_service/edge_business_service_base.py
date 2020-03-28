@@ -13,7 +13,11 @@ class EdgeBusinessServiceBase(ABC):
         pass
 
     @abstractmethod
-    def get_edge_models(self, node_id: int) -> list:
+    def get_edge_models_of_node(self, node_id: int) -> list:
+        pass
+
+    @abstractmethod
+    def get_edge_models_of_graph(self, graph_id: int) -> list:
         pass
 
     @abstractmethod

@@ -15,7 +15,7 @@ class EdgeMapHelper(object):
         return edge_model
 
     @staticmethod
-    def db_entities_to_node_models(db_entity: List[Tuple]) -> list:
+    def db_entities_to_edge_models(db_entity: List[Tuple]) -> list:
         list_edge_models = []
         for edge_values in db_entity:
             edge_model = EdgeMapHelper.db_entity_to_edge_model(edge_values)

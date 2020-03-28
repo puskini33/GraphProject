@@ -28,7 +28,7 @@ def main():
                                                       edge_business_service)
 
     # saved_graph_model = trial_graph_app_service.save_graph_model(unsaved_graph_model)
-    saved_graph_model = trial_graph_app_service.get_graph_model(90)
+    saved_graph_model = trial_graph_app_service.get_graph_model(86)
 
     graph_view = GraphView(window, saved_graph_model, trial_graph_app_service)
     window.mainloop()

@@ -15,7 +15,7 @@ class EdgeBusinessServiceMock(EdgeBusinessServiceBase):
         edge_model.edge_id = edge_id
         return edge_model
 
-    def get_edge_models(self, node_id: int) -> list:
+    def get_edge_models_of_node(self, node_id: int) -> list:
         edge_model = EdgeModel()
         edge_model.edge_id = self.edge_id
         edge_model.start_node_id = node_id

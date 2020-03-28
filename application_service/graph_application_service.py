@@ -49,13 +49,13 @@ class GraphApplicationService(object):
         graph_model = self.graph_business_service.get_graph_model(graph_id)
         graph_nodes = self.node_business_service.get_node_models(graph_id)
         graph_model.list_of_nodes = graph_nodes
-        for node in graph_model.list_of_nodes:
-            node_edges = self.edge_business_service.get_edge_models(node.node_id)
-            for edge_model in node_edges:
-                if edge_model.start_node_id == node.node_id:
-                    node.start_edges.append(edge_model)
-                    edge_model.start_node = node
-                elif edge_model.end_node_id == node.node_id:
-                    node.end_edges.append(edge_model)
-                    edge_model.end_node = node
+        graph_edges = self.edge_business_service.get_edge_models_of_graph(graph_id)
+        for node_model in graph_nodes:
+            for edge_model in graph_edges:
+                if node_model.node_id == edge_model.start_node_id:
+                    node_model.start_edges.append(edge_model)
+                    edge_model.start_node = node_model
+                if node_model.node_id == edge_model.end_node_id:
+                    node_model.end_edges.append(edge_model)
+                    edge_model.end_node = node_model
         return graph_model

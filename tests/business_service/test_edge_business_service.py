@@ -58,13 +58,36 @@ class TestEdgeBusinessService(unittest.TestCase):
         # assert name is the same
         self.assertEqual(result_edge_model.edge_name, edge_repository_mock.first_edge_name)
 
-    def test_get_node_edges(self):
+    def test_get_edge_models_of_node(self):
         # prepare
         edge_repository_mock = EdgeRepositoryMock()
         edge_business_service = EdgeBusinessService(edge_repository_mock)
 
         # act
-        result_list_of_edge_models = edge_business_service.get_edge_models(edge_repository_mock.first_end_node_id)
+        result_list_of_edge_models = edge_business_service.get_edge_models_of_node(edge_repository_mock.first_end_node_id)
+
+        # assert type of elements is EdgeModel
+        for element in result_list_of_edge_models:
+            self.assertEqual(type(element), EdgeModel)
+
+        # assert values of edge_model_properties are correct
+        self.verify_properties_of_first_edge(result_list_of_edge_models[0], edge_repository_mock)
+
+        self.assertEqual(result_list_of_edge_models[1].edge_id, edge_repository_mock.second_edge_id)
+        self.assertEqual(result_list_of_edge_models[1].edge_name, edge_repository_mock.second_edge_name)
+        self.assertEqual(result_list_of_edge_models[1].edge_cost, edge_repository_mock.second_edge_cost)
+        self.assertEqual(result_list_of_edge_models[1].start_node_id, edge_repository_mock.second_start_node_id)
+        self.assertEqual(result_list_of_edge_models[1].end_node_id, edge_repository_mock.first_end_node_id)
+        self.assertEqual(result_list_of_edge_models[1].graph_id, edge_repository_mock.graph_id)
+
+    def test_get_edge_models_of_graph(self):
+        # prepare
+        edge_repository_mock = EdgeRepositoryMock()
+        edge_business_service = EdgeBusinessService(edge_repository_mock)
+
+        # act
+        result_list_of_edge_models = edge_business_service.get_edge_models_of_graph(
+            edge_repository_mock.graph_id)
 
         # assert type of elements is EdgeModel
         for element in result_list_of_edge_models:

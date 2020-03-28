@@ -31,7 +31,7 @@ class EdgeRepository(BaseRepository, EdgeRepositoryBase):
         self.execute_query(node_edges_values)
         return self.cursor.fetchall()
 
-    def get_graph_edges(self, graph_id: int)-> List[Tuple]:
+    def get_graph_edges(self, graph_id: int) -> List[Tuple]:
         graph_edge_values = f"SELECT edge.id, edge.name, edge.cost, edge.start_node_id, edge.end_node_id,edge.graph_id " \
                             f"FROM edge " \
                             f"JOIN node " \

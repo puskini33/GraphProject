@@ -17,6 +17,10 @@ class EdgeRepositoryBase(ABC):
         pass
 
     @abstractmethod
+    def get_graph_edges(self, graph_id: int) -> list:
+        pass
+
+    @abstractmethod
     def update_edge(self, edge_id: int, edge_name: str, edge_cost: int, start_node_id: int, end_node_id: int,
                     graph_id: int):
         pass

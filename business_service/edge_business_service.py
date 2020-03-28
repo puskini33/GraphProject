@@ -20,9 +20,13 @@ class EdgeBusinessService(EdgeBusinessServiceBase):
         list_values_edge = self.edge_repository.get_edge_values(edge_id)
         return EdgeMapHelper.db_entity_to_edge_model(list_values_edge[0])
 
-    def get_edge_models(self, node_id: int) -> list:
+    def get_edge_models_of_node(self, node_id: int) -> list:
         list_values_edges = self.edge_repository.get_node_edges(node_id)
-        return EdgeMapHelper.db_entities_to_node_models(list_values_edges)
+        return EdgeMapHelper.db_entities_to_edge_models(list_values_edges)
+
+    def get_edge_models_of_graph(self, graph_id: int) -> list:
+        list_values_edges = self.edge_repository.get_graph_edges(graph_id)
+        return EdgeMapHelper.db_entities_to_edge_models(list_values_edges)
 
     def update_edge(self, edge_model: EdgeModel) -> EdgeModel:
         self.edge_repository.update_edge(edge_model.edge_id, edge_model.edge_name, edge_model.edge_cost,

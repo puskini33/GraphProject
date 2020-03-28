@@ -29,6 +29,13 @@ class EdgeRepositoryMock(EdgeRepositoryBase):
                  self.second_start_node_id, self.first_end_node_id, self.graph_id)
                 ]
 
+    def get_graph_edges(self, graph_id: int) -> List[Tuple]:
+        return [(self.first_edge_id, self.first_edge_name, self.first_edge_cost,
+                 self.first_start_node_id, self.first_end_node_id, self.graph_id),
+                (self.second_edge_id, self.second_edge_name, self.second_edge_cost,
+                 self.second_start_node_id, self.first_end_node_id, self.graph_id)
+                ]
+
     def update_edge(self, edge_id: int, edge_name: str, edge_cost: int, start_node_id: int, end_node_id: int,
                     graph_id: int):
         return
