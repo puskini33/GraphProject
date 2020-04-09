@@ -10,7 +10,7 @@ class GraphView(Frame):
 
     def __init__(self, window, graph_model: GraphModel, graph_app_service: GraphApplicationService):
         self.window = window
-        self.canvas = Canvas(self.window, width=700, height=700, bg='white')
+        self.canvas = Canvas(self.window, width=500, height=600, bg='white')
         self.graph_model = graph_model
         self.graph_app_service = graph_app_service
         self.selected_circles = []
@@ -32,7 +32,7 @@ class GraphView(Frame):
 
         drop_down_menu = Menu(menu_bar)
         menu_bar.add_cascade(label="File", menu=drop_down_menu)
-        drop_down_menu.add_command(label="Save", command=self.save_graph)
+        drop_down_menu.add_command(label="Save", command=self.get_graph_name)
 
     def right_click_event_handler(self, event):
         node_model = NodeModel(node_name='TrialNode')
@@ -88,11 +88,9 @@ class GraphView(Frame):
             if node.x_coord == int(coord_x) and node.y_coord == int(coord_y):
                 if circle_number == 1:
                     edge_model.start_node_id = node.node_id
-                    # edge_model.start_node = node
                     node.start_edges.append(edge_model)
                 elif circle_number == 2:
                     edge_model.end_node_id = node.node_id
-                    # edge_model.end_node = node
                     node.end_edges.append(edge_model)
         return coord_x, coord_y
 
@@ -123,7 +121,20 @@ class GraphView(Frame):
     def draw_edge(self, coordinates):
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
 
-    def save_graph(self):
+    def get_graph_name(self):
+        pop_up_window = Tk()
+        label1 = Label(pop_up_window, text='Enter Graph Name')
+        self.entry = Entry(pop_up_window)
+        button1 = Button(pop_up_window, text='Save Graph', command=self.save_graph_name)
+        button2 = Button(pop_up_window, text='Quit', command=pop_up_window.destroy)
+        label1.grid(row=0, column=0)
+        self.entry.grid(row=0, column=1)
+        button1.grid(row=1, column=0)
+        button2.grid(row=1, column=1)
+
+    def save_graph_name(self):
+        graph_name = self.entry.get()
+        self.graph_model.graph_name = graph_name
         self.graph_app_service.save_graph_model(self.graph_model)
 
     def set_id(self, element):

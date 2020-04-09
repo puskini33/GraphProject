@@ -13,37 +13,32 @@ class GraphApplicationService(object):
         self.edge_business_service = in_edge_business_service
 
     def save_graph_model(self, graph_model: GraphModel):
-        pair_of_node_ids = []  # list of tuple containing unsaved and saved node_id
         if graph_model.graph_id == -1:  # introduce graph_model for first time
             self.graph_business_service.insert_graph(graph_model)
 
-        if len(graph_model.list_of_nodes) > 0:  # if nodes are created
-            for node_model in graph_model.list_of_nodes:  # for each created node
+        if graph_model.list_of_nodes:  # if nodes are created
+            for node_model in graph_model.list_of_nodes:
                 if node_model.node_id < 0:  # if node was not already inserted
                     unsaved_node_id = node_model.node_id
                     node_model.graph_id = graph_model.graph_id
-                    self.node_business_service.insert_node(node_model)  # insert node
-                    pair_of_node_ids.append((unsaved_node_id, node_model.node_id))  # append the pair of saved and unsaved node_id
+                    self.node_business_service.insert_node(node_model)
 
-                if len(node_model.start_edges) > 0:  # if there are edges in node_model.start_edges
-                    for edge_model in node_model.start_edges:  # for every edge_model
-                        edge_model.graph_id = graph_model.graph_id  # set the graph_id
-                        for pair_of_ids in pair_of_node_ids:
-                            if edge_model.start_node_id == pair_of_ids[0]:
-                                edge_model.start_node_id = pair_of_ids[1]
+                    if node_model.start_edges:
+                        self.insert_edge_model(node_model.start_edges, unsaved_node_id, graph_model, node_model)
 
-                        if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
-                            self.edge_business_service.insert_edge(edge_model)
+                    if node_model.end_edges:
+                        self.insert_edge_model(node_model.end_edges, unsaved_node_id, graph_model, node_model)
 
-                if len(node_model.end_edges) > 0:
-                    for edge_model in node_model.end_edges:
-                        edge_model.graph_id = graph_model.graph_id
-                        for pair_of_ids in pair_of_node_ids:
-                            if edge_model.end_node_id == pair_of_ids[0]:
-                                edge_model.end_node_id = pair_of_ids[1]
+    def insert_edge_model(self, edge_model_list, unsaved_node_id, graph_model, node_model):
+        for edge_model in edge_model_list:
+            edge_model.graph_id = graph_model.graph_id
+            if edge_model.start_node_id == unsaved_node_id:
+                edge_model.start_node_id = node_model.node_id
+            elif edge_model.end_node_id == unsaved_node_id:
+                edge_model.end_node_id = node_model.node_id
 
-                        if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
-                            self.edge_business_service.insert_edge(edge_model)
+            if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
+                self.edge_business_service.insert_edge(edge_model)
 
     def get_graph_model(self, graph_id: int) -> GraphModel:
         graph_model = self.graph_business_service.get_graph_model(graph_id)
