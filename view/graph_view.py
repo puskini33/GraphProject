@@ -2,15 +2,35 @@ from models.graph_model import GraphModel
 from models.node_model import NodeModel
 from models.edge_model import EdgeModel
 from application_service.graph_application_service import GraphApplicationService
+from functools import partial
 from tkinter import *
+import view
 
 
 class GraphView(Frame):
     counter_id = -1
 
-    def __init__(self, window, graph_model: GraphModel, graph_app_service: GraphApplicationService):
+    def __init__(self, window: view.main.GraphItApp, graph_model: GraphModel, graph_app_service: GraphApplicationService):
         self.window = window
-        self.canvas = Canvas(self.window, width=500, height=600, bg='white')
+        save_button = Button(self.window, text='Save Graph', bd=10, bg='black', fg='white', pady=5, width=10,
+                             font='bold', command=self.save_graph_name)
+        quit_button = Button(self.window, text='Quit GraphIt', bd=10, bg='black', fg='white', pady=5, width=10,
+                             font='bold', command=self.window.destroy)
+        action_with_arg = partial(self.window.switch_frame, view.main.StartPage)
+        back_button = Button(self.window, text="Back", bd=10, bg='black', fg='white', pady=5, width=10,
+                             font='bold', command=action_with_arg)
+
+        save_button.place(relx=.99, rely=.35, anchor="e")
+        quit_button.place(relx=.99, rely=.65, anchor="e")
+        back_button.place(relx=.99, rely=.50, anchor="e")
+
+        self.canvas = Canvas(self.window, width=700, height=500, bg='white', cursor='arrow', confine=True)
+        self.canvas.pack()
+
+        Label(self.window, text="Introduce Graph Name:", font=('Helvetica', 8, "bold")).place(relx=0.93, rely=.10, anchor='n')
+        self.entry_graph_name = Entry(self.window, font='yellow', width=10)
+        self.entry_graph_name.place(relx=0.93, rely=.15, anchor='n')
+
         self.graph_model = graph_model
         self.graph_app_service = graph_app_service
         self.selected_circles = []
@@ -19,23 +39,12 @@ class GraphView(Frame):
         self.init_ui()
 
     def init_ui(self):
-        self.canvas.grid(row=0, column=0)
         self.canvas.bind('<Button-3>', self.right_click_event_handler)
         self.canvas.bind('<Button-1>', self.left_click_event_handler)
-        self.master.title('GraphIt')
-        self.add_menu_bar()
         self.draw_graph(self.graph_model)
 
-    def add_menu_bar(self):
-        menu_bar = Menu(self.master)
-        self.master.config(menu=menu_bar)
-
-        drop_down_menu = Menu(menu_bar)
-        menu_bar.add_cascade(label="File", menu=drop_down_menu)
-        drop_down_menu.add_command(label="Save", command=self.get_graph_name)
-
     def right_click_event_handler(self, event):
-        node_model = NodeModel(node_name='TrialNode')
+        node_model = NodeModel(node_name='NodeName')
         self.set_id(node_model)
         node_model.set_coord(event.x, event.y)
         self.graph_model.list_of_nodes.append(node_model)
@@ -63,7 +72,7 @@ class GraphView(Frame):
         coordinates = []
         circle_number = 1
 
-        edge_model = EdgeModel(edge_name='TrialEdge')
+        edge_model = EdgeModel(edge_name='EdgeName')
         self.set_id(edge_model)
 
         for circle in self.selected_circles:
@@ -121,21 +130,12 @@ class GraphView(Frame):
     def draw_edge(self, coordinates):
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
 
-    def get_graph_name(self):
-        pop_up_window = Tk()
-        label1 = Label(pop_up_window, text='Enter Graph Name')
-        self.entry = Entry(pop_up_window)
-        button1 = Button(pop_up_window, text='Save Graph', command=self.save_graph_name)
-        button2 = Button(pop_up_window, text='Quit', command=pop_up_window.destroy)
-        label1.grid(row=0, column=0)
-        self.entry.grid(row=0, column=1)
-        button1.grid(row=1, column=0)
-        button2.grid(row=1, column=1)
-
     def save_graph_name(self):
-        graph_name = self.entry.get()
-        self.graph_model.graph_name = graph_name
-        self.graph_app_service.save_graph_model(self.graph_model)
+        if self.entry_graph_name.get():
+            self.graph_model.graph_name = self.entry_graph_name.get()
+            self.graph_app_service.save_graph_model(self.graph_model)
+        else:
+            self.entry_graph_name.configure({"background": "bisque"})
 
     def set_id(self, element):
         GraphView.counter_id -= 1

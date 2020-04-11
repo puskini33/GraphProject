@@ -1,0 +1,5 @@
+[
+  "test_graph_business_service.py::TestGraphBusinessService::test_insert_graph",
+  "test_graph_business_service.py::TestGraphBusinessService::test_get_graph_model",
+  "test_edge_business_service.py::TestEdgeBusinessService::test_get_node_edges"
+]
