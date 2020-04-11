@@ -13,6 +13,10 @@ class GraphRepositoryBase(ABC):
         pass
 
     @abstractmethod
+    def get_all_graphs(self) -> List[Tuple]:
+        pass
+
+    @abstractmethod
     def update_graph(self, graph_id: int, graph_name: str):
         pass
 

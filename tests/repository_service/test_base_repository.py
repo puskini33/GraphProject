@@ -50,6 +50,12 @@ class PrepareDatabase(object):
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()
 
+    def get_graphs_values(self)-> list:
+        sql_select = f"SELECT * FROM graph;"
+        self.test_cursor.execute(sql_select)
+        self.test_database_connection.commit()
+        return self.test_cursor.fetchall()
+
     def get_node_id(self, node_name: str, node_x_coord: int, node_y_coord: int, graph_id: int) -> int:
         sql_get_node_start_name = f"SELECT node.id FROM node WHERE node.name = '{node_name}' AND " \
                                   f"node.node_x_coord = '{node_x_coord}' AND node.node_y_coord = '{node_y_coord}' " \

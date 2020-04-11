@@ -63,6 +63,31 @@ class TestGraphRepository(unittest.TestCase):
         finally:
             self.test_database_connection.close()
 
+    def test_get_all_graphs(self):
+        try:
+            # prepare
+            self.delete_values_from_database()
+
+            # act
+            graph_name_1 = 'Value1'
+            graph_name_2 = 'Value2'
+
+            # insert_graph new_graph
+            self.database_preparation.insert_graph(graph_name_1)
+            self.database_preparation.insert_graph(graph_name_2)
+
+            # get graph names from graph_repository
+            graphs_values_from_graph_repository = self.graph_repository.get_all_graphs()
+            self.graph_repository.close_connection()
+
+            # manually get graph values
+            graph_values = self.database_preparation.get_graphs_values()
+
+            # assert
+            self.assertEqual(graph_values, graphs_values_from_graph_repository)
+        finally:
+            self.test_database_connection.close()
+
     def test_update_graph(self):
         try:
             # prepare

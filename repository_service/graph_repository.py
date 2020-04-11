@@ -20,6 +20,11 @@ class GraphRepository(GraphRepositoryBase, BaseRepository):
         self.execute_query(certain_graph)
         return self.cursor.fetchall()
 
+    def get_all_graphs(self) -> List[Tuple]:
+        all_graphs = f"SELECT * FROM graph;"
+        self.execute_query(all_graphs)
+        return self.cursor.fetchall()
+
     def update_graph(self, graph_id: int, graph_name: str):
         updated_values = f"UPDATE graph SET name = '{graph_name}' WHERE id = '{graph_id}';"
         self.execute_query(updated_values)
