@@ -12,24 +12,22 @@ class GraphView(Frame):
 
     def __init__(self, window: view.main.GraphItApp, graph_model: GraphModel, graph_app_service: GraphApplicationService):
         self.window = window
-        save_button = Button(self.window, text='Save Graph', bd=10, bg='black', fg='white', pady=5, width=10,
+        save_button = Button(self.window, text='Save Graph', bg='DeepSkyBlue4', fg='white', width=10,
                              font='bold', command=self.save_graph_name)
-        quit_button = Button(self.window, text='Quit GraphIt', bd=10, bg='black', fg='white', pady=5, width=10,
-                             font='bold', command=self.window.destroy)
         action_with_arg = partial(self.window.switch_frame, view.main.StartPage)
-        back_button = Button(self.window, text="Back", bd=10, bg='black', fg='white', pady=5, width=10,
+        back_button = Button(self.window, text="Back", bg='DeepSkyBlue4', fg='white', width=10,
                              font='bold', command=action_with_arg)
-
-        save_button.place(relx=.99, rely=.35, anchor="e")
-        quit_button.place(relx=.99, rely=.65, anchor="e")
         back_button.place(relx=.99, rely=.50, anchor="e")
+        if graph_model.graph_id < 0:  # display entry with graph_name only if graph does not exist in the database
+            Label(self.window, text="Introduce Graph Name:", font=('Helvetica', 8, "bold")).place(relx=0.93, rely=.10, anchor='n')
+            self.entry_graph_name = Entry(self.window, font='yellow', width=10)
+            self.entry_graph_name.place(relx=0.93, rely=.15, anchor='n')
 
         self.canvas = Canvas(self.window, width=700, height=500, bg='white', cursor='arrow', confine=True)
-        self.canvas.pack()
 
-        Label(self.window, text="Introduce Graph Name:", font=('Helvetica', 8, "bold")).place(relx=0.93, rely=.10, anchor='n')
-        self.entry_graph_name = Entry(self.window, font='yellow', width=10)
-        self.entry_graph_name.place(relx=0.93, rely=.15, anchor='n')
+        save_button.place(relx=.99, rely=.35, anchor="e")
+
+        self.canvas.pack()
 
         self.graph_model = graph_model
         self.graph_app_service = graph_app_service
@@ -104,8 +102,8 @@ class GraphView(Frame):
         return coord_x, coord_y
 
     def draw_graph(self, graph_model: GraphModel):
-        coordinates = []
         try:
+            coordinates = []
             for node_model in graph_model.list_of_nodes:
                 self.draw_node(node_model)
 
@@ -131,11 +129,14 @@ class GraphView(Frame):
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
 
     def save_graph_name(self):
-        if self.entry_graph_name.get():
-            self.graph_model.graph_name = self.entry_graph_name.get()
+        try:
+            if self.entry_graph_name.get():
+                self.graph_model.graph_name = self.entry_graph_name.get()
+                self.graph_app_service.save_graph_model(self.graph_model)
+            else:
+                self.entry_graph_name.configure({"background": "bisque"})
+        except AttributeError:
             self.graph_app_service.save_graph_model(self.graph_model)
-        else:
-            self.entry_graph_name.configure({"background": "bisque"})
 
     def set_id(self, element):
         GraphView.counter_id -= 1

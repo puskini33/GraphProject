@@ -16,9 +16,9 @@ class GraphApplicationService(object):
         if graph_model.graph_id == -1:  # introduce graph_model for first time
             self.graph_business_service.insert_graph(graph_model)
 
-        if graph_model.list_of_nodes:  # if nodes are created
+        if graph_model.list_of_nodes:
             for node_model in graph_model.list_of_nodes:
-                if node_model.node_id < 0:  # if node was not already inserted
+                if node_model.node_id < 0:  # if node was not inserted into the database
                     unsaved_node_id = node_model.node_id
                     node_model.graph_id = graph_model.graph_id
                     self.node_business_service.insert_node(node_model)
@@ -29,13 +29,20 @@ class GraphApplicationService(object):
                     if node_model.end_edges:
                         self.insert_edge_model(node_model.end_edges, unsaved_node_id, graph_model, node_model)
 
+                elif node_model.node_id > 0:  # if node was inserted into the database
+                    if node_model.start_edges:
+                        self.insert_edge_model(node_model.start_edges, node_model.node_id, graph_model, node_model)
+                    if node_model.end_edges:
+                        self.insert_edge_model(node_model.end_edges, node_model.node_id, graph_model, node_model)
+
     def insert_edge_model(self, edge_model_list, unsaved_node_id, graph_model, node_model):
         for edge_model in edge_model_list:
-            edge_model.graph_id = graph_model.graph_id
-            if edge_model.start_node_id == unsaved_node_id:
-                edge_model.start_node_id = node_model.node_id
-            elif edge_model.end_node_id == unsaved_node_id:
-                edge_model.end_node_id = node_model.node_id
+            if edge_model.edge_id < 0:  # if edge model was not inserted into the database
+                edge_model.graph_id = graph_model.graph_id
+                if edge_model.start_node_id == unsaved_node_id:
+                    edge_model.start_node_id = node_model.node_id
+                elif edge_model.end_node_id == unsaved_node_id:
+                    edge_model.end_node_id = node_model.node_id
 
             if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
                 self.edge_business_service.insert_edge(edge_model)
