@@ -19,3 +19,5 @@ I used a 3-layered architecture for separating of concerns and for easy testing.
 Run application
 
 Run the main.py file in the view folder.
+right-click to make a node
+left-click to connect nodes with edges
