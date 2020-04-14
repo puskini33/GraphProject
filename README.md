@@ -2,7 +2,7 @@
 
 General Description
 
-Desktop application that allows you to draw a graph of nodes and edges and calculate the most low-cost route from a node to the other node.
+Desktop application that allows you to draw a graph of nodes and edges and will allow you to calculate the most low-cost route from a node to the other node.
 
 
 Short Description of Technologies
@@ -16,4 +16,6 @@ Application Architecture
 
 I used a 3-layered architecture for separating of concerns and for easy testing.
 
-On the UI part, I will use the MVC pattern to separate tkinter code from business code.
+Run application
+
+Run the main.py file in the view folder.
