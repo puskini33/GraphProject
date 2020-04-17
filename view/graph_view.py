@@ -1,39 +1,18 @@
 from models.graph_model import GraphModel
 from models.node_model import NodeModel
 from models.edge_model import EdgeModel
-from application_service.graph_application_service import GraphApplicationService
-from functools import partial
-from tkinter import *
-import view
 
 
-class GraphView(Frame):
+class UIInitialization(object):
     counter_id = -1
 
-    def __init__(self, window: view.main.GraphItApp, graph_model: GraphModel, graph_app_service: GraphApplicationService):
-        self.window = window
-        save_button = Button(self.window, text='Save Graph', bg='DeepSkyBlue4', fg='white', width=10,
-                             font='bold', command=self.save_graph_name)
-        action_with_arg = partial(self.window.switch_frame, view.main.StartPage)
-        back_button = Button(self.window, text="Back", bg='DeepSkyBlue4', fg='white', width=10,
-                             font='bold', command=action_with_arg)
-        back_button.place(relx=.99, rely=.50, anchor="e")
-        if graph_model.graph_id < 0:  # display entry with graph_name only if graph does not exist in the database
-            Label(self.window, text="Introduce Graph Name:", font=('Helvetica', 8, "bold")).place(relx=0.93, rely=.10, anchor='n')
-            self.entry_graph_name = Entry(self.window, font='yellow', width=10)
-            self.entry_graph_name.place(relx=0.93, rely=.15, anchor='n')
-
-        self.canvas = Canvas(self.window, width=700, height=500, bg='white', cursor='arrow', confine=True)
-
-        save_button.place(relx=.99, rely=.35, anchor="e")
-
-        self.canvas.pack()
-
+    def __init__(self, graph_model, graph_app_service, canvas):
         self.graph_model = graph_model
         self.graph_app_service = graph_app_service
-        self.selected_circles = []
+        self.canvas = canvas
         self.node_radius = 25
-        super().__init__()
+        self.selected_circles = []
+        self.entry_graph_name = None
         self.init_ui()
 
     def init_ui(self):
@@ -139,10 +118,10 @@ class GraphView(Frame):
             self.graph_app_service.save_graph_model(self.graph_model)
 
     def set_id(self, element):
-        GraphView.counter_id -= 1
+        UIInitialization.counter_id -= 1
         if type(element) == NodeModel:
-            element.node_id = GraphView.counter_id
+            element.node_id = UIInitialization.counter_id
         elif type(element) == GraphModel:
-            element.graph_id = GraphView.counter_id
+            element.graph_id = UIInitialization.counter_id
         elif type(element) == EdgeModel:
-            element.edge_id = GraphView.counter_id
+            element.edge_id = UIInitialization.counter_id
