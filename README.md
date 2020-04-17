@@ -16,8 +16,10 @@ Application Architecture
 
 I used a 3-layered architecture for separating of concerns and for easy testing.
 
-Run application
+How to run application
 
-Run the main.py file in the view folder.
-right-click to make a node
-left-click to connect nodes with edges
+
+Run the main.py file:
+
+* right-click to make a node
+* left-click to connect nodes with edges
