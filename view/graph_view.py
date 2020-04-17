@@ -102,7 +102,7 @@ class UIInitialization(object):
 
     def draw_node(self, node_model):
         self.canvas.create_oval(node_model.x_coord - self.node_radius, node_model.y_coord - self.node_radius,
-                                node_model.x_coord + self.node_radius, node_model.y_coord + self.node_radius, fill='orange', width=3, tag='all')
+                                node_model.x_coord + self.node_radius, node_model.y_coord + self.node_radius, fill='chocolate1', width=3, tag='all')
 
     def draw_edge(self, coordinates):
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)

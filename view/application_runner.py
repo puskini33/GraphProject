@@ -11,8 +11,8 @@ class GraphItApp(Tk):
         self._frame = None
         self.switch_frame(view.start_page.StartPage)
 
-    def switch_frame(self, frame_class, graph_id=None):
-        if frame_class and type(graph_id)==int:
+    def switch_frame(self, frame_class, graph_id=None):  # refractor
+        if frame_class and type(graph_id) == int:
             new_frame = frame_class(self, graph_id)
             if self._frame:
                 self._frame.destroy()

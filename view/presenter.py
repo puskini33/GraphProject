@@ -8,7 +8,7 @@ from repository_service.node_repository import NodeRepository
 from repository_service.edge_repository import EdgeRepository
 
 
-class BackendSetup(object):
+class Presenter(object):
 
     graph_repository = GraphRepository()
     node_repository = NodeRepository()
@@ -18,10 +18,10 @@ class BackendSetup(object):
     edge_business_service = EdgeBusinessService(edge_repository)
     graph_app_service = GraphApplicationService(graph_business_service, node_business_service, edge_business_service)
 
-    def load_graph(self, graph_id):
-        loaded_graph_model = BackendSetup.graph_app_service.get_graph_model(graph_id)
+    def load_graph(self, graph_id: int) -> GraphModel:
+        loaded_graph_model = Presenter.graph_app_service.get_graph_model(graph_id)
         return loaded_graph_model
 
-    def save_graph(self):
+    def save_graph(self) -> GraphModel:
         unsaved_graph_model = GraphModel()
         return unsaved_graph_model
