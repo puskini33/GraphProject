@@ -1,6 +1,6 @@
-from view.application_runner import GraphItApp
+import presenters.graph_it_app_presenter
 
 
 if __name__ == '__main__':
-    app_window = GraphItApp()
-    app_window.mainloop()
+    main_presenter = presenters.graph_it_app_presenter.GraphItAppPresenter()
+    main_presenter.run()

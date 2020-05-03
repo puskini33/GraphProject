@@ -3,7 +3,7 @@ from models.node_model import NodeModel
 from models.edge_model import EdgeModel
 
 
-class UIInitialization(object):
+class GraphView(object):
     counter_id = -1
 
     def __init__(self, graph_model, graph_app_service, canvas):
