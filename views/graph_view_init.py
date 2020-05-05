@@ -1,15 +1,18 @@
 from models.graph_model import GraphModel
 from models.node_model import NodeModel
 from models.edge_model import EdgeModel
+from tkinter import *
 
 
-class GraphView(object):
+class GraphViewInit(object):
     counter_id = -1
 
-    def __init__(self, graph_model, graph_app_service, canvas):
+    def __init__(self, graph_model, graph_app_service, frame):
+        self.frame = frame
         self.graph_model = graph_model
         self.graph_app_service = graph_app_service
-        self.canvas = canvas
+        self.canvas = Canvas(self.frame, bg='white', cursor='arrow')
+        self.canvas.place(width=850, height=500)
         self.node_radius = 25
         self.selected_circles = []
         self.entry_graph_name = None
@@ -107,7 +110,7 @@ class GraphView(object):
     def draw_edge(self, coordinates):
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
 
-    def save_graph_name(self):
+    def save_graph_name(self, event):
         try:
             if self.entry_graph_name.get():
                 self.graph_model.graph_name = self.entry_graph_name.get()
@@ -116,12 +119,14 @@ class GraphView(object):
                 self.entry_graph_name.configure({"background": "bisque"})
         except AttributeError:
             self.graph_app_service.save_graph_model(self.graph_model)
+        finally:
+            self.graph_app_service.save_graph_model(self.graph_model)
 
     def set_id(self, element):
-        UIInitialization.counter_id -= 1
+        GraphViewInit.counter_id -= 1
         if type(element) == NodeModel:
-            element.node_id = UIInitialization.counter_id
+            element.node_id = GraphViewInit.counter_id
         elif type(element) == GraphModel:
-            element.graph_id = UIInitialization.counter_id
+            element.graph_id = GraphViewInit.counter_id
         elif type(element) == EdgeModel:
-            element.edge_id = UIInitialization.counter_id
+            element.edge_id = GraphViewInit.counter_id

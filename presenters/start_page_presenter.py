@@ -1,16 +1,23 @@
 import presenters
-from view.start_page import StartPageView
-from contracts.presenters.abstract_presenter_base import AbstractPresenterBase
+from views.start_page_view import StartPageView
+from contracts.presenters.presenter_base import PresenterBase
+from models.common_models.view_navigation_parameter import ViewNavigationParameter
+from models.enums.graph_canvas_state import GraphCanvasState
 
 
-class StartPagePresenter(AbstractPresenterBase):
+class StartPagePresenter(PresenterBase):
 
     def __init__(self, root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter):
         self.root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter = root_presenter
+
         self.view: StartPageView = StartPageView(self.root_presenter.get_root_view())
-        self.view.draw_button.bind('<Button-1>', self.root_presenter.go_to_draw_page)
+        self.view.draw_button.bind('<Button-1>', self.go_to_graph_canvas_page)
         self.view.load_button.bind('<Button-1>', self.root_presenter.go_to_load_page)
         self.view.quit_button.bind('<Button-1>', self.root_presenter.close_application)
+
+    def go_to_graph_canvas_page(self, event):
+        view_parameter = ViewNavigationParameter(GraphCanvasState.new)
+        self.root_presenter.go_to_graph_canvas_page(view_parameter)
 
     def load_view(self):
         self.view.load_frame()

@@ -1,18 +1,18 @@
-from view.application_runner import GraphItAppView
+from contracts.views.view_base import ViewBase
 from tkinter import *
-import view
 
 
-class StartPageView(Frame):
+class StartPageView(ViewBase, Frame):
+
     def __init__(self, root: Tk):
         Frame.__init__(self, root)
 
         self.config(background='antique white', width=1280, height=720)
         self.welcome_label = Label(self, text='Welcome to the GraphIt Application!', bg='antique white', font=("Courier", 15))
         self.draw_button = Button(self, text='Draw Graph', bd=15, bg='DeepSkyBlue3', fg='white', width=15,
-                             font='bold')  # command=lambda: root.switch_frame(view.new_graph_canvas.NewGraphCanvas)
+                                  font='bold')  # command=lambda: root.switch_frame(view.new_graph_canvas.NewGraphCanvas)
         self.load_button = Button(self, text='Load Graph', bd=15, bg='DeepSkyBlue3', fg='white', width=15,
-                             font='bold')  # command=lambda: root.switch_frame(view.graph_selection_page.GraphSelectionPage)
+                                  font='bold')  # command=lambda: root.switch_frame(view.graph_selection_page.GraphSelectionPage)
         self.quit_button = Button(self, text='Quit', bd=7, bg='DeepSkyBlue3', fg='white', pady=3)  # command=root.destroy
 
         self.place_widgets()

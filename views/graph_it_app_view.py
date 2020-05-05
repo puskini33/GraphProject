@@ -1,5 +1,5 @@
 from tkinter import *
-import view
+import views
 
 
 class GraphItAppView(Tk):

@@ -1,14 +1,14 @@
-from view.loaded_graph_canvas import LoadedGraphCanvas
-from view.presenter import Presenter
+from views.loaded_graph_canvas import LoadedGraphCanvas
+from views.backend import Backend
 from typing import List, Tuple
 from tkinter import *
-import view
+import views
 
 
 class GraphSelectionPage(Frame):
     def __init__(self, master):
         self.master = master
-        self.backend = Presenter()
+        self.backend = Backend()
         Frame.__init__(self, self.master, width=1280, height=720)
         self.config(background='antique white')
 
@@ -16,7 +16,7 @@ class GraphSelectionPage(Frame):
         load_button = Button(self, text="Load Graph", bg='DeepSkyBlue3', fg='white', width=10,
                              font='bold', command=self.get_id_selected_graph)
         back_button = Button(self, text="Back", bg='DeepSkyBlue3', fg='white', width=10,
-                             font='bold', command=lambda: self.master.switch_frame(view.start_page.StartPage))
+                             font='bold')  # , command=lambda: self.master.switch_frame(view.start_page.StartPage)
 
         self.listbox = Listbox(self, font=("Courier", 10), highlightcolor='black', highlightthickness=2, relief='ridge')
 
