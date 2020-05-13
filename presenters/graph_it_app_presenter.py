@@ -27,7 +27,9 @@ class GraphItAppPresenter(object):
         self.current_child_presenter.load_view()
 
     def go_to_load_page(self, event) -> None:
-        pass
+        self.destroy_current_child_presenter()
+        self.current_child_presenter = presenters.graph_selection_presenter.GraphSelectionPresenter(self)
+        self.current_child_presenter.load_view()
 
     def close_application(self, event) -> None:
         self.view.destroy_root_view()

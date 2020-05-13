@@ -17,6 +17,7 @@ class GraphApplicationService(object):
             self.graph_business_service.insert_graph(graph_model)
 
         if graph_model.list_of_nodes:
+            self.graph_business_service.update_graph(graph_model)  # update name graph_model
             for node_model in graph_model.list_of_nodes:
                 if node_model.node_id < 0:  # if node was not inserted into the database
                     unsaved_node_id = node_model.node_id
@@ -44,8 +45,8 @@ class GraphApplicationService(object):
                 elif edge_model.end_node_id == unsaved_node_id:
                     edge_model.end_node_id = node_model.node_id
 
-            if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
-                self.edge_business_service.insert_edge(edge_model)
+                if edge_model.start_node_id > 0 and edge_model.end_node_id > 0:
+                    self.edge_business_service.insert_edge(edge_model)
 
     def get_graph_model(self, graph_id: int) -> GraphModel:
         graph_model = self.graph_business_service.get_graph_model(graph_id)

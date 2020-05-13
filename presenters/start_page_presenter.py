@@ -15,14 +15,14 @@ class StartPagePresenter(PresenterBase):
         self.view.load_button.bind('<Button-1>', self.root_presenter.go_to_load_page)
         self.view.quit_button.bind('<Button-1>', self.root_presenter.close_application)
 
-    def go_to_graph_canvas_page(self, event):
+    def go_to_graph_canvas_page(self, event) -> None:
         view_parameter = ViewNavigationParameter(GraphCanvasState.new)
         self.root_presenter.go_to_graph_canvas_page(view_parameter)
 
-    def load_view(self):
+    def load_view(self) -> None:
         self.view.load_frame()
 
-    def destroy_view(self):
+    def destroy_view(self) -> None:
         self.view.destroy_frame()
 
 

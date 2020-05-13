@@ -13,7 +13,7 @@ class GraphCanvasPresenter(PresenterBase):
     counter_id = -1
 
     def __init__(self,  root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter,
-                 view_parameter: ViewNavigationParameter):
+                 view_parameter: ViewNavigationParameter) -> None:
         self.root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter = root_presenter
         self.view: GraphCanvasView = GraphCanvasView(self.root_presenter.get_root_view())
         self.view.save_button.bind('<Button-1>', self.save_graph)
@@ -31,33 +31,32 @@ class GraphCanvasPresenter(PresenterBase):
 
         self.init_presenter()
 
-    def init_presenter(self):
+    def init_presenter(self) -> None:
         self.view.canvas.bind('<Button-3>', self.right_click_event_handler)
         self.view.canvas.bind('<Button-1>', self.left_click_event_handler)
 
-    def right_click_event_handler(self, event):
+    def right_click_event_handler(self, event) -> None:
         node_model = self.create_node_model(event.x, event.y)
         circle_coordinates = [event.x, event.y]
         self.view.draw_circle(circle_coordinates, node_model.radius)
 
-    def left_click_event_handler(self, event):
+    def left_click_event_handler(self, event) -> None:
         clicked_circle = self.get_node_if_clicked(event.x, event.y)
         if clicked_circle:
             self.selected_circles.append(clicked_circle)
-        number_circles = self.verify_number_clicked_circles()
-        if number_circles == 2:
+        if len(self.selected_circles) == 2:
             line_coordinates = self.get_coordinates_center_circles()
             if line_coordinates is not None:
                 self.selected_circles = []
                 self.create_edge_model(line_coordinates)
                 self.view.draw_line(line_coordinates)
 
-    def get_abs_coordinates_difference(self, x, y, node_center_x, node_center_y):
+    def get_abs_coordinates_difference(self, x: int, y: int, node_center_x: int, node_center_y: int) -> tuple:
         dx = abs(x - node_center_x)
         dy = abs(y - node_center_y)
         return dx, dy
 
-    def get_node_if_clicked(self, x, y):
+    def get_node_if_clicked(self, x: int, y: int) -> NodeModel or bool:
         for node in self.graph_model.list_of_nodes:
             dx, dy = self.get_abs_coordinates_difference(x, y, node.x_coord, node.y_coord)
             if dx + dy <= node.radius:  # if click is inside circle
@@ -67,14 +66,7 @@ class GraphCanvasPresenter(PresenterBase):
 
         return False
 
-    def verify_number_clicked_circles(self):
-        if len(self.selected_circles) == 1:
-            return 1
-        elif len(self.selected_circles) == 2:
-            if all(self.selected_circles):
-                return 2
-
-    def get_coordinates_center_circles(self):
+    def get_coordinates_center_circles(self) -> list:
         coordinates = []
         for node_model in self.selected_circles:
             coordinates.append(node_model.x_coord)
@@ -82,14 +74,14 @@ class GraphCanvasPresenter(PresenterBase):
 
         return coordinates
 
-    def create_node_model(self, x, y):
+    def create_node_model(self, x: int, y: int) -> NodeModel:
         node_model = NodeModel(node_name='NodeName')
         self.set_id(node_model)
         node_model.set_coord(x, y)
         self.graph_model.list_of_nodes.append(node_model)
         return node_model
 
-    def create_edge_model(self, coordinates):
+    def create_edge_model(self, coordinates: list) -> None:
         edge_model = EdgeModel(edge_name='EdgeName')
         self.set_id(edge_model)
         for node in self.graph_model.list_of_nodes:
@@ -100,7 +92,7 @@ class GraphCanvasPresenter(PresenterBase):
                 edge_model.end_node_id = node.node_id
                 node.end_edges.append(edge_model)
 
-    def draw_graph(self, graph_model: GraphModel):
+    def draw_graph(self, graph_model: GraphModel) -> None:
         try:
             for node_model in graph_model.list_of_nodes:
                 circle_coordinates = [node_model.x_coord, node_model.y_coord]
@@ -120,14 +112,15 @@ class GraphCanvasPresenter(PresenterBase):
         except AttributeError:
             return
 
-    def save_graph(self, event):
+    def save_graph(self, event) -> None:
         if self.view.entry_graph_name.get():
             self.graph_model.graph_name = self.view.entry_graph_name.get()
             self.graph_app_service.save_graph_model(self.graph_model)
-        else:
-            self.view.entry_graph_name.configure({"background": "bisque"})
+        else:  # if save button pressed without a graph_name
+            self.graph_model.graph_name = 'Graph Name'
+            self.graph_app_service.save_graph_model(self.graph_model)
 
-    def set_id(self, element):
+    def set_id(self, element: NodeModel or EdgeModel or GraphModel) -> None:
         GraphCanvasPresenter.counter_id -= 1
         if type(element) == NodeModel:
             element.node_id = GraphCanvasPresenter.counter_id

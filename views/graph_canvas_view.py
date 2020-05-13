@@ -4,7 +4,7 @@ from tkinter import *
 
 class GraphCanvasView(ViewBase, Frame):
 
-    def __init__(self, root: Tk):
+    def __init__(self, root: Tk) -> None:
         Frame.__init__(self, root)
         self.configure(width=1000, height=800, background='antique white')
 
@@ -29,7 +29,7 @@ class GraphCanvasView(ViewBase, Frame):
         self.canvas.create_oval(coordinates[0] - circle_radius, coordinates[1] - circle_radius,
                                 coordinates[0] + circle_radius, coordinates[1] + circle_radius, fill='chocolate1', width=3, tag='all')
 
-    def draw_line(self, coordinates):
+    def draw_line(self, coordinates: list) -> None:
         self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
 
     def load_frame(self) -> None:
