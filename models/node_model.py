@@ -10,6 +10,7 @@ class NodeModel(object):
         self.graph_id = graph_id
         self.x_coord = 0
         self.y_coord = 0
+        self.radius = 25
         self.start_edges: List[EdgeModel] = []
         self.end_edges: List[EdgeModel] = []
 

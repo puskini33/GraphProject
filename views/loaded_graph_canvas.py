@@ -1,6 +1,4 @@
 from views.graph_it_app_view import GraphItAppView
-from views.backend import Backend
-from views.graph_view_init import GraphViewInit
 from models.graph_model import GraphModel
 from functools import partial
 from tkinter import *
@@ -9,7 +7,7 @@ import views
 
 class LoadedGraphCanvas(Frame):
 
-    def __init__(self, master: GraphItAppView, graph_id: int):
+    def __init__(self, master, graph_id: int):
         Frame.__init__(self, master)
         self.configure(width=1000, height=800, background='antique white')
         save_button = Button(self, text='Save Graph', bg='DeepSkyBlue3', fg='white', width=10,
@@ -19,8 +17,8 @@ class LoadedGraphCanvas(Frame):
                              font='bold')  # command=action_with_arg
 
         self.graph_id = graph_id
-        self.backend = Backend()
-        self.graph_app_service = self.backend.graph_app_service
+        # self.backend = Backend()
+        # self.graph_app_service = self.backend.graph_app_service
         # self.graph_model: GraphModel = self.backend.load_graph(self.graph_id)
 
         self.canvas = Canvas(self, bg='white', cursor='arrow')
@@ -30,5 +28,5 @@ class LoadedGraphCanvas(Frame):
 
         # self.graph_view = GraphViewInit(self.graph_model, self.graph_app_service, self.canvas)
 
-    def save_new_graph(self):
-        self.graph_view.save_graph_name()
+    """def save_new_graph(self):
+        self.graph_view.save_graph_name()"""

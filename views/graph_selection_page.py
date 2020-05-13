@@ -1,5 +1,5 @@
 from views.loaded_graph_canvas import LoadedGraphCanvas
-from views.backend import Backend
+from application_service.graph_application_service_factory import GraphAppServiceFactory
 from typing import List, Tuple
 from tkinter import *
 import views
@@ -8,7 +8,7 @@ import views
 class GraphSelectionPage(Frame):
     def __init__(self, master):
         self.master = master
-        self.backend = Backend()
+        self.backend = GraphAppServiceFactory()
         Frame.__init__(self, self.master, width=1280, height=720)
         self.config(background='antique white')
 
@@ -30,7 +30,8 @@ class GraphSelectionPage(Frame):
             self.listbox.insert(END, item)
 
     def get_graphs_from_repository(self) -> List[Tuple]:
-        return self.backend.graph_repository.get_all_graphs()
+        # return self.backend.graph_repository.get_all_graphs()
+        pass
 
     def get_id_selected_graph(self):  # refractor
         selected_graph_value = self.listbox.curselection()
