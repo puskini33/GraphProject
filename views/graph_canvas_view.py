@@ -1,4 +1,5 @@
 from contracts.views.view_base import ViewBase
+from models.node_model import NodeModel
 from tkinter import *
 
 
@@ -12,7 +13,7 @@ class GraphCanvasView(ViewBase, Frame):
                                   font='bold')
         self.back_button = Button(self, text="Back", bg='DeepSkyBlue3', fg='white', width=10,
                                   font='bold')
-        self.label = Label(self, text="Introduce Graph Name:",  bg='antique white', font=('Helvetica', 8, "bold"))
+        self.label = Label(self, text="Introduce Graph Name:", bg='antique white', font=('Helvetica', 8, "bold"))
         self.entry_graph_name = Entry(self, font='yellow', width=10)
         self.canvas = Canvas(self, bg='white', cursor='arrow')
 
@@ -25,12 +26,12 @@ class GraphCanvasView(ViewBase, Frame):
         self.canvas.place(width=850, height=500)
         self.entry_graph_name.place(relx=0.93, rely=.15, anchor='n')
 
-    def draw_circle(self, coordinates, circle_radius):
-        self.canvas.create_oval(coordinates[0] - circle_radius, coordinates[1] - circle_radius,
-                                coordinates[0] + circle_radius, coordinates[1] + circle_radius, fill='chocolate1', width=3, tag='all')
+    def draw_circle(self, node_model: NodeModel) -> None:
+        self.canvas.create_oval(node_model.x_coord - node_model.radius, node_model.y_coord - node_model.radius,
+                                node_model.x_coord + node_model.radius, node_model.y_coord + node_model.radius, fill='chocolate1', width=3, tag='all')
 
-    def draw_line(self, coordinates: list) -> None:
-        self.canvas.create_line(coordinates, tag='all', arrow='last', width=3)
+    def draw_line(self, start_node: NodeModel, end_node: NodeModel) -> None:
+        self.canvas.create_line([start_node.x_coord, start_node.y_coord, end_node.x_coord, end_node.y_coord], tag='all', arrow='last', width=3)
 
     def load_frame(self) -> None:
         self.pack()

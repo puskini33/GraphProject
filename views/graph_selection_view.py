@@ -1,5 +1,6 @@
-from repository_service.graph_repository import GraphRepository
 from contracts.views.view_base import ViewBase
+from models.graph_model import GraphModel
+from typing import List
 from tkinter import *
 
 
@@ -16,29 +17,27 @@ class GraphSelectionView(ViewBase, Frame):
                                   font='bold')
 
         self.listbox = Listbox(self, font=("Courier", 10), highlightcolor='black', highlightthickness=2, relief='ridge')
-
-        self.graph_repository = GraphRepository()
-        self.populate_listbox()
         self.place_widgets()
 
-    def place_widgets(self):
+    def place_widgets(self) -> None:
         self.listbox.place(relx=.50, rely=.45, anchor="center")
         self.back_button.place(relx=.53, rely=.75)
         self.load_button.place(relx=.33, rely=.75)
         self.label.place(relx=.30, rely=.15)
 
-    def populate_listbox(self) -> None:
-        graph_options = self.graph_repository.get_all_graphs()
-        for item in graph_options:
-            self.listbox.insert(END, item)
+    def populate_listbox(self, all_graphs: List[GraphModel]) -> None:
+        for item in all_graphs:
+            self.listbox.insert(END, (item.graph_id, item.graph_name))
 
-    def get_id_selected_graph(self) -> int:
-        selected_graph_value = self.listbox.curselection()
-        if selected_graph_value:
-            graph_id = selected_graph_value[0] + 1
-            return graph_id
+    def get_list_selected_index(self) -> int:
+        selected_item = self.listbox.curselection()
+        if len(selected_item) != 0:
+            return selected_item[0]
         else:
-            self.label.configure(fg='red')
+            return -1
+
+    def change_label_color(self) -> None:
+        self.label.configure(fg='red')
 
     def load_frame(self) -> None:
         self.pack()

@@ -1,4 +1,3 @@
-from models.graph_model import GraphModel
 from application_service.graph_application_service import GraphApplicationService
 from business_service.graph_business_service import GraphBusinessService
 from business_service.node_business_service import NodeBusinessService

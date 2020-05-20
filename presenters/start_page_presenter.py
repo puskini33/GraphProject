@@ -7,7 +7,7 @@ from models.enums.graph_canvas_state import GraphCanvasState
 
 class StartPagePresenter(PresenterBase):
 
-    def __init__(self, root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter):
+    def __init__(self, root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter) -> None:
         self.root_presenter: presenters.graph_it_app_presenter.GraphItAppPresenter = root_presenter
 
         self.view: StartPageView = StartPageView(self.root_presenter.get_root_view())
