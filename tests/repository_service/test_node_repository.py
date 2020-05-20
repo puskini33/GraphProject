@@ -40,7 +40,7 @@ class TestNodeRepository(unittest.TestCase):
 
             # select id inserted node
             node_id = self.database_preparation.get_node_id(node_name, node_x_coord, node_y_coord, graph_id)
-
+            # TODO: compare the objects within the list; do a for
             # assert
             self.assertEqual(node_id_from_repository, node_id)
         finally:

@@ -13,6 +13,7 @@ Short Description of Technologies
 
 Application Architecture 
 - inspired from https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+- MVP Pattern used for the Tkinter interface and Business Logic
 
 I used a 3-layered architecture for separating of concerns and for easy testing.
 
