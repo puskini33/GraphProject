@@ -7,7 +7,7 @@ import sqlite3
 class TestNodeRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
+        self.path = 'test_database.db'
         self.node_repository = NodeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()

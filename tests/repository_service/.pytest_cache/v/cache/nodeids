@@ -1,3 +1,3 @@
 [
-  "test_graph_repository.py::TestGraphRepository::test_insert_graph"
+  "test_node_repository.py::TestNodeRepository::test_insert_node"
 ]
