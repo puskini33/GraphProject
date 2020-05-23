@@ -97,13 +97,15 @@ class TestEdgeRepository(TestCase):
 
             # manually get id of new edge
             edge_id = self.database_preparation.get_edge_id(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+            edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id)
 
             # get values of edge via edge_repository
-            edge_values = self.edge_repository.get_edge_values(edge_id)[0]
+            edge_values_from_repository = self.edge_repository.get_edge_values(edge_id)[0]
             self.edge_repository.close_connection()
 
             # assert
-            self.assertEqual(edge_values, (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id, ))
+            for index in range(len(edge_values_from_repository)):
+                self.assertEqual(edge_values_from_repository[index], edge_values[index])
         finally:
             self.test_database_connection.close()
 
@@ -142,13 +144,15 @@ class TestEdgeRepository(TestCase):
 
             # get edge_ id
             edge_id = self.database_preparation.get_edge_id(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+            edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id)
 
             # get edges of nodes from edge_repository
-            node_edge_values = self.edge_repository.get_node_edges(node_start_id)[0]
+            node_edge_values_from_repository = self.edge_repository.get_node_edges(node_start_id)[0]
             self.edge_repository.close_connection()
 
             # assert
-            self.assertEqual(node_edge_values, (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id))
+            for index in range(len(node_edge_values_from_repository)):
+                self.assertEqual(node_edge_values_from_repository[index], edge_values[index])
         finally:
             self.test_database_connection.close()
 
@@ -189,13 +193,15 @@ class TestEdgeRepository(TestCase):
 
             # get edge_ id
             edge_id = self.database_preparation.get_edge_id(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+            edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id)
 
             # get edges of graph from edge_repository
-            graph_edge_values = self.edge_repository.get_graph_edges(graph_id)[0]
+            graph_edge_values_from_repository = self.edge_repository.get_graph_edges(graph_id)[0]
             self.edge_repository.close_connection()
 
             # assert
-            self.assertEqual(graph_edge_values, (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id))
+            for index in range(len(graph_edge_values_from_repository)):
+                self.assertEqual(graph_edge_values_from_repository[index], edge_values[index])
         finally:
             self.test_database_connection.close()
 

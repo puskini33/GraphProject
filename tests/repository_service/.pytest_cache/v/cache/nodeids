@@ -1,3 +1,7 @@
 [
-  "test_node_repository.py::TestNodeRepository::test_insert_node"
+  "test_graph_repository.py::TestGraphRepository::test_delete_graph",
+  "test_graph_repository.py::TestGraphRepository::test_get_all_graphs",
+  "test_graph_repository.py::TestGraphRepository::test_get_graph",
+  "test_graph_repository.py::TestGraphRepository::test_insert_graph",
+  "test_graph_repository.py::TestGraphRepository::test_update_graph"
 ]

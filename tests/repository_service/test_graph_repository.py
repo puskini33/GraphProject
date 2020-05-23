@@ -59,7 +59,8 @@ class TestGraphRepository(unittest.TestCase):
             graph_values = self.database_preparation.get_graph_values(latest_graph_id)
 
             # assert
-            self.assertEqual(graph_values, graph_values_from_graph_repository)
+            for index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
         finally:
             self.test_database_connection.close()
 
@@ -84,7 +85,8 @@ class TestGraphRepository(unittest.TestCase):
             graph_values = self.database_preparation.get_graphs_values()
 
             # assert
-            self.assertEqual(graph_values, graphs_values_from_graph_repository)
+            for index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
         finally:
             self.test_database_connection.close()
 
