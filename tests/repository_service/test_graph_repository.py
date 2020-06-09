@@ -7,7 +7,7 @@ import sqlite3
 class TestGraphRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
+        self.path = 'test_database.db'
         self.graph_repository = GraphRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
@@ -56,10 +56,21 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # manually get graph values
-            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
+            graph_values = self.database_preparation.get_graph(latest_graph_id)
 
             # assert
-            self.assertEqual(graph_values, graph_values_from_graph_repository)
+<<<<<<< HEAD
+<<<<<<< HEAD
+            for index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
         finally:
             self.test_database_connection.close()
 
@@ -81,10 +92,21 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # manually get graph values
-            graph_values = self.database_preparation.get_graphs_values()
+            graph_values = self.database_preparation.get_all_graphs()
 
             # assert
-            self.assertEqual(graph_values, graphs_values_from_graph_repository)
+<<<<<<< HEAD
+<<<<<<< HEAD
+            for index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
         finally:
             self.test_database_connection.close()
 
@@ -135,7 +157,7 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # select graph values
-            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
+            graph_values = self.database_preparation.get_graph(latest_graph_id)
 
             # assert
             self.assertEqual(graph_values, [])

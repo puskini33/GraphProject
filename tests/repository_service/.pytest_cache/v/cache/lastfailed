@@ -1,7 +1,11 @@
 {
+<<<<<<< HEAD
+=======
   "test_edge_repository.py::TestEdgeRepository::test_insert_edge": true,
-  "test_graph_repository.py": true,
+<<<<<<< HEAD
+>>>>>>> add_line_widget
+=======
+>>>>>>> add_line_widget
   "test_graph_repository.py::TestGraphRepository": true,
-  "test_graph_repository.py::TestGraphRepository::test_insert": true,
-  "test_graph_repository.py::TestGraphRepository::test_update_graph": true
+  "test_graph_repository.py::TestGraphRepository::test_insert": true
 }

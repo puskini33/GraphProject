@@ -7,7 +7,7 @@ import sqlite3
 class TestNodeRepository(unittest.TestCase):
 
     def __init__(self, *args, **kwargs):
-        self.path = 'E:\\PYTHON\\code\\GraphProject\\tests\\repository_service\\test_database.db'
+        self.path = 'test_database.db'
         self.node_repository = NodeRepository(self.path)
         self.test_database_connection = sqlite3.connect(self.path)
         self.test_cursor = self.test_database_connection.cursor()
@@ -77,7 +77,18 @@ class TestNodeRepository(unittest.TestCase):
             node_values = self.database_preparation.get_node_values(inserted_node_id)
 
             # assert
-            self.assertEqual(node_values, node_values_from_repository)
+<<<<<<< HEAD
+<<<<<<< HEAD
+            for index in range(len(node_values_from_repository)):
+                self.assertEqual(node_values[index], node_values_from_repository[index])
+=======
+            for value_index in range(len(node_values_from_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(node_values_from_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
+>>>>>>> add_line_widget
         finally:
             self.test_database_connection.close()
 
@@ -117,7 +128,18 @@ class TestNodeRepository(unittest.TestCase):
             node_values = self.test_cursor.fetchall()
 
             # assert
-            self.assertEqual(node_values, node_values_from_node_repository)
+<<<<<<< HEAD
+<<<<<<< HEAD
+            for index in range(len(node_values_from_node_repository)):
+                self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
+=======
+            for value_index in range(len(node_values_from_node_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(node_values_from_node_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
+>>>>>>> add_line_widget
         finally:
             self.test_database_connection.close()
 
@@ -146,14 +168,28 @@ class TestNodeRepository(unittest.TestCase):
 
             # update name of new_node
             updated_node_name = 'E'
+            node_values = [(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)]
+
             self.node_repository.update_node(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)
+            updated_node_values_from_repository = [(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)]
             self.node_repository.close_connection()
 
             # get updated values of new_node
             updated_node_values = self.database_preparation.get_node_values(node_id)
 
             # assert
-            self.assertEqual(updated_node_values, [(node_id, updated_node_name, node_x_coord, node_y_coord, graph_id)])
+<<<<<<< HEAD
+<<<<<<< HEAD
+            for index in range(len(updated_node_values)):
+                self.assertEqual(updated_node_values[index], node_values[index])
+=======
+            for value_index in range(len(updated_node_values_from_repository)):
+                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(updated_node_values_from_repository)):
+                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
+>>>>>>> add_line_widget
         finally:
             self.test_database_connection.close()
 
