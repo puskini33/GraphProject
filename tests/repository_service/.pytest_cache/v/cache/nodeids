@@ -3,11 +3,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
   "test_graph_repository.py::TestGraphRepository::test_delete_graph",
   "test_graph_repository.py::TestGraphRepository::test_get_all_graphs",
   "test_graph_repository.py::TestGraphRepository::test_get_graph",
   "test_graph_repository.py::TestGraphRepository::test_insert_graph",
   "test_graph_repository.py::TestGraphRepository::test_update_graph"
+<<<<<<< HEAD
 =======
   "test_edge_repository.py::TestEdgeRepository::test_get_edge"
 >>>>>>> add_line_widget
@@ -20,4 +24,6 @@
 =======
   "test_edge_repository.py::TestEdgeRepository::test_get_edge"
 >>>>>>> add_line_widget
+=======
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
 ]

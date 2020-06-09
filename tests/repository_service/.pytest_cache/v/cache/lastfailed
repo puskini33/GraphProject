@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   "test_edge_repository.py::TestEdgeRepository::test_insert_edge": true,
 <<<<<<< HEAD
@@ -12,6 +13,8 @@
 >>>>>>> add_line_widget
 =======
 >>>>>>> add_line_widget
+=======
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
   "test_graph_repository.py::TestGraphRepository": true,
   "test_graph_repository.py::TestGraphRepository::test_insert": true
 }
