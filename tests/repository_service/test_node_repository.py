@@ -80,8 +80,13 @@ class TestNodeRepository(unittest.TestCase):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(node_values_from_repository)):
                 self.assertEqual(node_values[index], node_values_from_repository[index])
+=======
+            for value_index in range(len(node_values_from_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(node_values_from_repository)):
                 self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
@@ -136,8 +141,13 @@ class TestNodeRepository(unittest.TestCase):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(node_values_from_node_repository)):
                 self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
+=======
+            for value_index in range(len(node_values_from_node_repository)):
+                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(node_values_from_node_repository)):
                 self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
@@ -191,8 +201,13 @@ class TestNodeRepository(unittest.TestCase):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(updated_node_values)):
                 self.assertEqual(updated_node_values[index], node_values[index])
+=======
+            for value_index in range(len(updated_node_values_from_repository)):
+                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(updated_node_values_from_repository)):
                 self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
