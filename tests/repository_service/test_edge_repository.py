@@ -99,7 +99,11 @@ class TestEdgeRepository(TestCase):
             edge_id = self.database_preparation.get_edge_id(edge_name, edge_cost, node_start_id, node_end_id, graph_id)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id)
+=======
+            edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id, )
+>>>>>>> add_line_widget
 =======
             edge_values = (edge_id, edge_name, edge_cost, node_start_id, node_end_id, graph_id, )
 >>>>>>> add_line_widget
@@ -114,8 +118,13 @@ class TestEdgeRepository(TestCase):
             # assert
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(edge_values_from_repository)):
                 self.assertEqual(edge_values_from_repository[index], edge_values[index])
+=======
+            for value_index in range(len(edge_values_from_repository)):
+                self.assertEqual(edge_values_from_repository[value_index], edge_values[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(edge_values_from_repository)):
                 self.assertEqual(edge_values_from_repository[value_index], edge_values[value_index])
@@ -171,8 +180,13 @@ class TestEdgeRepository(TestCase):
             # assert
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(node_edge_values_from_repository)):
                 self.assertEqual(node_edge_values_from_repository[index], edge_values[index])
+=======
+            for value_index in range(len(node_edge_values_from_repository)):
+                self.assertEqual(node_edge_values_from_repository[value_index], edge_values[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(node_edge_values_from_repository)):
                 self.assertEqual(node_edge_values_from_repository[value_index], edge_values[value_index])
@@ -230,8 +244,13 @@ class TestEdgeRepository(TestCase):
             # assert
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(graph_edge_values_from_repository)):
                 self.assertEqual(graph_edge_values_from_repository[index], edge_values[index])
+=======
+            for value_index in range(len(graph_edge_values_from_repository)):
+                self.assertEqual(graph_edge_values_from_repository[value_index], edge_values[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(graph_edge_values_from_repository)):
                 self.assertEqual(graph_edge_values_from_repository[value_index], edge_values[value_index])

@@ -61,8 +61,13 @@ class TestGraphRepository(unittest.TestCase):
             # assert
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(graph_values_from_graph_repository)):
                 self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(graph_values_from_graph_repository)):
                 self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
@@ -97,8 +102,13 @@ class TestGraphRepository(unittest.TestCase):
             # assert
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(graphs_values_from_graph_repository)):
                 self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
 =======
             for value_index in range(len(graphs_values_from_graph_repository)):
                 self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
