@@ -3,7 +3,7 @@ import models
 
 class EdgeModel(object):
 
-    def __init__(self, edge_id: int = -1, edge_name: str = '', edge_cost: int = -1,
+    def __init__(self, edge_id: int = -1, edge_name: str = '', edge_cost: int = 0,
                  start_node_id: int = -1, end_node_id: int = -1, graph_id: int = -1):
         self.edge_id = edge_id
         self.edge_name = edge_name

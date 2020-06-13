@@ -44,14 +44,14 @@ class PrepareDatabase(object):
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()[0][0]
 
-    def get_graph_values(self, graph_id: int) -> list:
-        sql_select = f"SELECT * FROM graph WHERE graph.id = '{graph_id}';"
+    def get_graph(self, graph_id: int) -> list:
+        sql_select = f"SELECT graph.id, graph.name FROM graph WHERE graph.id = '{graph_id}';"
         self.test_cursor.execute(sql_select)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()
 
-    def get_graphs_values(self)-> list:
-        sql_select = f"SELECT * FROM graph;"
+    def get_all_graphs(self) -> list:
+        sql_select = f"SELECT graph.id, graph.name FROM graph;"
         self.test_cursor.execute(sql_select)
         self.test_database_connection.commit()
         return self.test_cursor.fetchall()

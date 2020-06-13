@@ -56,11 +56,46 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # manually get graph values
-            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
+            graph_values = self.database_preparation.get_graph(latest_graph_id)
 
             # assert
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(graph_values_from_graph_repository)):
                 self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graph_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+=======
+            for index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+=======
+            for index in range(len(graph_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graph_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
         finally:
             self.test_database_connection.close()
 
@@ -82,11 +117,46 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # manually get graph values
-            graph_values = self.database_preparation.get_graphs_values()
+            graph_values = self.database_preparation.get_all_graphs()
 
             # assert
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
             for index in range(len(graphs_values_from_graph_repository)):
                 self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for value_index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[value_index], graphs_values_from_graph_repository[value_index])
+>>>>>>> add_line_widget
+=======
+            for index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+=======
+            for index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+=======
+            for index in range(len(graphs_values_from_graph_repository)):
+                self.assertEqual(graph_values[index], graphs_values_from_graph_repository[index])
+>>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
         finally:
             self.test_database_connection.close()
 
@@ -137,7 +207,7 @@ class TestGraphRepository(unittest.TestCase):
             self.graph_repository.close_connection()
 
             # select graph values
-            graph_values = self.database_preparation.get_graph_values(latest_graph_id)
+            graph_values = self.database_preparation.get_graph(latest_graph_id)
 
             # assert
             self.assertEqual(graph_values, [])

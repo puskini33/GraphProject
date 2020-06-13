@@ -2,3 +2,4 @@ from .graph_it_app_presenter import GraphItAppPresenter
 from .start_page_presenter import StartPagePresenter
 from .graph_canvas_presenter import GraphCanvasPresenter
 from .graph_selection_presenter import GraphSelectionPresenter
+from .custom_widgets_presenter.line_widget_presenter import LineWidgetPresenter
