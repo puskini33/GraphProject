@@ -4,7 +4,6 @@ from application_service.graph_application_service_factory import GraphAppServic
 from models.common_models.view_navigation_parameter import ViewNavigationParameter
 from models.enums.graph_canvas_state import GraphCanvasState
 from presenters.custom_widgets_presenter.line_widget_presenter import LineWidgetPresenter
-from helpers.utils import get_valid_number
 from models.graph_model import GraphModel
 from models.edge_model import EdgeModel
 from helpers.utils import *
@@ -36,17 +35,40 @@ class GraphCanvasPresenter(PresenterBase):
         self.view.bind_entry_edge_cost_to_change(self.on_edge_cost_changed)
 
     def right_click_event_handler(self, event) -> None:
-        node_model = self.set_node_model(event.x, event.y)
-        self.view.draw_circle(node_model)
+        if self.is_already_node(event) is False:
+            node_model = self.set_node_model(event.x, event.y)
+            self.view.draw_circle(node_model)
 
     def left_click_event_handler(self, event) -> None:
         clicked_circle = self.get_overlapping_node(event.x, event.y)
         if clicked_circle:
             self.selected_circles.append(clicked_circle)
-        if len(self.selected_circles) == 2:
-            edge_model = self.set_edge_model(self.selected_circles[0], self.selected_circles[1])
-            self.draw_line(edge_model)
-            self.selected_circles = []
+        if len(self.selected_circles) == 2 and self.selected_circles[0] != self.selected_circles[1]:
+            if self.is_already_edge(self.selected_circles[0], self.selected_circles[1]) is False:  # if an edge exists
+                edge_model = self.set_edge_model(self.selected_circles[0], self.selected_circles[1])
+                self.draw_line(edge_model)
+                self.selected_circles = []
+            else:
+                self.selected_circles.clear()
+        elif len(self.selected_circles) == 2 and self.selected_circles[0] == self.selected_circles[1]:  # if user clicked twice on the same node
+            self.selected_circles.clear()
+
+    def is_already_node(self, event):
+        node = self.get_overlapping_node(event.x, event.y)
+        if node:
+            return True
+
+        return False
+
+    def is_already_edge(self, start_node, end_node):
+        for edge in start_node.start_edges:
+            if edge in end_node.end_edges:  # if the edge already exists
+                return True
+
+        for edge in start_node.end_edges:  # if the edge already exists
+            if edge in end_node.start_edges:
+                return True
+        return False
 
     def on_edge_cost_changed(self, event):
         if self.selected_line_widget is not None:

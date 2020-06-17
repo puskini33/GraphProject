@@ -7,7 +7,9 @@ def are_coordinates_on_node(node: NodeModel, x: int, y: int) -> bool:
     dy = abs(y - node.y_coord)
 
     if (dx + dy <= node.radius) or (
-            pow(dx, 2) + pow(dy, 2) <= pow(node.radius, 2)):  # if click is inside circle or on the contour
+            pow(dx, 2) + pow(dy, 2) <= pow(node.radius, 2)) or (  # if click is inside circle or on the contour
+
+            pow(dx, 2) + pow(dy, 2) < pow(node.radius * 2, 2)):  # if click is inside the sphere of 2overlapping circles
         return True
     else:
         return False
