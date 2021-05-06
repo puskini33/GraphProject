@@ -1,4 +1,4 @@
-# GraphIt - work in progress
+# GraphIt
 
 General Description
 
