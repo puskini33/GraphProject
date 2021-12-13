@@ -11,11 +11,15 @@ Short Description of Technologies
   * Testing with Unitesting
   * Database: SQLite, sqlite3 -DB-API 2.0
 
-Application Architecture 
+### Application Architecture 
 - inspired from https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 - MVP Pattern used for the Tkinter interface and Business Logic
 
 I used a 3-layered architecture for separating of concerns and for easy testing.
+
+### Project Flow
+
+![img.png](img.png)
 
 ## Instructions to set up the project environment on Windows
 1. Install python3
