@@ -19,7 +19,7 @@ I used a 3-layered architecture for separating of concerns and for easy testing.
 
 ### Project Flow
 
-![img.png](img.png)
+![img_1.png](img_1.png)
 
 ## Instructions to set up the project environment on Windows
 1. Install python3
