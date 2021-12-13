@@ -21,7 +21,7 @@ class TestNodeRepository(unittest.TestCase):
     def test_insert_node(self):
         try:
             # prepare
-            self.delete_values_from_database()
+            #self.delete_values_from_database()
 
             # act
             # insert new graph
@@ -77,43 +77,9 @@ class TestNodeRepository(unittest.TestCase):
             node_values = self.database_preparation.get_node_values(inserted_node_id)
 
             # assert
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             for index in range(len(node_values_from_repository)):
                 self.assertEqual(node_values[index], node_values_from_repository[index])
-=======
-            for value_index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[index], node_values_from_repository[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[index], node_values_from_repository[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(node_values_from_repository)):
-                self.assertEqual(node_values[index], node_values_from_repository[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+
         finally:
             self.test_database_connection.close()
 
@@ -153,43 +119,9 @@ class TestNodeRepository(unittest.TestCase):
             node_values = self.test_cursor.fetchall()
 
             # assert
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             for index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
-=======
-            for value_index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[value_index], node_values_from_node_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(node_values_from_node_repository)):
-                self.assertEqual(node_values[0][index], node_values_from_node_repository[0][index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+                self.assertEqual(node_values[index], node_values_from_node_repository[index])
+
         finally:
             self.test_database_connection.close()
 
@@ -228,43 +160,12 @@ class TestNodeRepository(unittest.TestCase):
             updated_node_values = self.database_preparation.get_node_values(node_id)
 
             # assert
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             for index in range(len(updated_node_values)):
                 self.assertEqual(updated_node_values[index], node_values[index])
-=======
+
             for value_index in range(len(updated_node_values_from_repository)):
                 self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(updated_node_values_from_repository)):
-                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(updated_node_values_from_repository)):
-                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for value_index in range(len(updated_node_values_from_repository)):
-                self.assertEqual(updated_node_values[value_index], updated_node_values_from_repository[value_index])
->>>>>>> add_line_widget
-=======
-            for index in range(len(updated_node_values)):
-                self.assertEqual(updated_node_values[index], node_values[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(updated_node_values)):
-                self.assertEqual(updated_node_values[index], node_values[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
-=======
-            for index in range(len(updated_node_values)):
-                self.assertEqual(updated_node_values[index], node_values[index])
->>>>>>> 965f01744ac4d658480afd0395435f9a50eabf45
+
         finally:
             self.test_database_connection.close()
 
