@@ -1,4 +1,0 @@
-{
-  "test_graph_business_service.py::TestGraphBusinessService::test_get_graph_model": true,
-  "test_graph_business_service.py::TestGraphBusinessService::test_insert_graph": true
-}
